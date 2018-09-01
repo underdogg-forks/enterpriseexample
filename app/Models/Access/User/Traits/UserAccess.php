@@ -8,37 +8,6 @@ namespace App\Models\Access\User\Traits;
 trait UserAccess
 {
     /**
-     * Checks if the user has a Role by its name or id.
-     *
-     * @param string $nameOrId Role name or id.
-     *
-     * @return bool
-     */
-    public function hasRole($nameOrId)
-    {
-        foreach ($this->roles as $role) {
-            //See if role has all permissions
-            if ($role->all) {
-                return true;
-            }
-
-            //First check to see if it's an ID
-            if (is_numeric($nameOrId)) {
-                if ($role->id == $nameOrId) {
-                    return true;
-                }
-            }
-
-            //Otherwise check by name
-            if ($role->name == $nameOrId) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Checks to see if user has array of roles.
      *
      * All must return true
@@ -77,6 +46,47 @@ trait UserAccess
         }
 
         return false;
+    }
+
+    /**
+     * Checks if the user has a Role by its name or id.
+     *
+     * @param string $nameOrId Role name or id.
+     *
+     * @return bool
+     */
+    public function hasRole($nameOrId)
+    {
+        foreach ($this->roles as $role) {
+            //See if role has all permissions
+            if ($role->all) {
+                return true;
+            }
+
+            //First check to see if it's an ID
+            if (is_numeric($nameOrId)) {
+                if ($role->id == $nameOrId) {
+                    return true;
+                }
+            }
+
+            //Otherwise check by name
+            if ($role->name == $nameOrId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param  $nameOrId
+     *
+     * @return bool
+     */
+    public function hasPermission($nameOrId)
+    {
+        return $this->allow($nameOrId);
     }
 
     /**
@@ -143,6 +153,17 @@ trait UserAccess
     }
 
     /**
+     * @param  $permissions
+     * @param bool $needsAll
+     *
+     * @return bool
+     */
+    public function hasPermissions($permissions, $needsAll = false)
+    {
+        return $this->allowMultiple($permissions, $needsAll);
+    }
+
+    /**
      * Check an array of permissions and whether or not all are required to continue.
      *
      * @param  $permissions
@@ -182,24 +203,17 @@ trait UserAccess
     }
 
     /**
-     * @param  $nameOrId
+     * Attach multiple roles to a user.
      *
-     * @return bool
-     */
-    public function hasPermission($nameOrId)
-    {
-        return $this->allow($nameOrId);
-    }
-
-    /**
-     * @param  $permissions
-     * @param bool $needsAll
+     * @param mixed $roles
      *
-     * @return bool
+     * @return void
      */
-    public function hasPermissions($permissions, $needsAll = false)
+    public function attachRoles($roles)
     {
-        return $this->allowMultiple($permissions, $needsAll);
+        foreach ($roles as $role) {
+            $this->attachRole($role);
+        }
     }
 
     /**
@@ -223,6 +237,20 @@ trait UserAccess
     }
 
     /**
+     * Detach multiple roles from a user.
+     *
+     * @param mixed $roles
+     *
+     * @return void
+     */
+    public function detachRoles($roles)
+    {
+        foreach ($roles as $role) {
+            $this->detachRole($role);
+        }
+    }
+
+    /**
      * Alias to eloquent many-to-many relation's detach() method.
      *
      * @param mixed $role
@@ -240,34 +268,6 @@ trait UserAccess
         }
 
         $this->roles()->detach($role);
-    }
-
-    /**
-     * Attach multiple roles to a user.
-     *
-     * @param mixed $roles
-     *
-     * @return void
-     */
-    public function attachRoles($roles)
-    {
-        foreach ($roles as $role) {
-            $this->attachRole($role);
-        }
-    }
-
-    /**
-     * Detach multiple roles from a user.
-     *
-     * @param mixed $roles
-     *
-     * @return void
-     */
-    public function detachRoles($roles)
-    {
-        foreach ($roles as $role) {
-            $this->detachRole($role);
-        }
     }
 
     /**

@@ -45,15 +45,15 @@ class PasswordReset extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/password/reset/'.$this->token);
+        $url = url('/password/reset/' . $this->token);
 
         return (new MailMessage())
-                    ->greeting('Hello!')
-                    ->line('We have recevied password reset request from you!')
-                    ->line('Click on the below link to reset your password.')
-                    ->action('Reset Password', $url)
-                    ->line('If you haven\'t requested for password reset, please ignore this email.')
-                    ->line('Thank you!');
+            ->greeting('Hello!')
+            ->line('We have recevied password reset request from you!')
+            ->line('Click on the below link to reset your password.')
+            ->action('Reset Password', $url)
+            ->line('If you haven\'t requested for password reset, please ignore this email.')
+            ->line('Thank you!');
     }
 
     /**

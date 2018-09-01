@@ -14,8 +14,8 @@ class Page extends BaseModel
         SoftDeletes,
         PageRelationship,
         PageAttribute {
-            // PageAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+        // PageAttribute::getEditButtonAttribute insteadof ModelTrait;
+    }
 
     /**
      * The database table used by the model.

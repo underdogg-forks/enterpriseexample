@@ -70,7 +70,7 @@ class EloquentHistoryRepository implements HistoryContract
             return $this;
         }
 
-        throw new GeneralException('An invalid history type was supplied: '.$type.'.');
+        throw new GeneralException('An invalid history type was supplied: ' . $type . '.');
     }
 
     /**
@@ -145,20 +145,20 @@ class EloquentHistoryRepository implements HistoryContract
     public function log()
     {
         return History::create([
-            'type_id'   => $this->type->id,
-            'user_id'   => access()->id(),
+            'type_id' => $this->type->id,
+            'user_id' => access()->id(),
             'entity_id' => $this->entity_id,
-            'icon'      => $this->icon,
-            'class'     => $this->class,
-            'text'      => $this->text,
-            'assets'    => $this->assets,
+            'icon' => $this->icon,
+            'class' => $this->class,
+            'text' => $this->text,
+            'assets' => $this->assets,
         ]);
     }
 
     /**
      * @param null $limit
      * @param bool $paginate
-     * @param int  $pagination
+     * @param int $pagination
      *
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
@@ -174,10 +174,43 @@ class EloquentHistoryRepository implements HistoryContract
     }
 
     /**
+     * @param $query
+     * @param $limit
+     * @param $paginate
+     * @param $pagination
+     *
+     * @return mixed
+     */
+    public function buildPagination($query, $limit, $paginate, $pagination)
+    {
+        if ($paginate && is_numeric($pagination)) {
+            return $query->{$this->paginationType}($pagination);
+        } else {
+            if ($limit && is_numeric($limit)) {
+                $query->take($limit);
+            }
+
+            return $query->get();
+        }
+    }
+
+    /**
+     * @param $history
+     * @param bool $paginate
+     *
+     * @return string
+     */
+    public function buildList($history, $paginate = true)
+    {
+        return view('backend.history.partials.list', ['history' => $history, 'paginate' => $paginate])
+            ->render();
+    }
+
+    /**
      * @param $type
      * @param null $limit
      * @param bool $paginate
-     * @param int  $pagination
+     * @param int $pagination
      *
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
@@ -194,11 +227,30 @@ class EloquentHistoryRepository implements HistoryContract
     }
 
     /**
+     * @param $query
+     * @param $type
+     *
+     * @return mixed
+     */
+    private function checkType($query, $type)
+    {
+        if (is_numeric($type)) {
+            return $query->where('type_id', $type)->latest();
+        } else {
+            $type = strtolower($type);
+
+            return $query->whereHas('type', function ($query) use ($type) {
+                $query->where('name', ucfirst($type));
+            })->latest();
+        }
+    }
+
+    /**
      * @param $type
      * @param $entity_id
      * @param null $limit
      * @param bool $paginate
-     * @param int  $pagination
+     * @param int $pagination
      *
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
@@ -242,31 +294,33 @@ class EloquentHistoryRepository implements HistoryContract
                         if (is_array($values)) {
                             switch (count($values)) {
                                 case 1:
-                                    $text = str_replace('{'.$key.'}', link_to_route($values[0], $values[0]), $text);
-                                break;
+                                    $text = str_replace('{' . $key . '}', link_to_route($values[0], $values[0]), $text);
+                                    break;
 
                                 case 2:
-                                    $text = str_replace('{'.$key.'}', link_to_route($values[0], $values[1]), $text);
-                                break;
+                                    $text = str_replace('{' . $key . '}', link_to_route($values[0], $values[1]), $text);
+                                    break;
 
                                 case 3:
-                                    $text = str_replace('{'.$key.'}', link_to_route($values[0], $values[1], $values[2]), $text);
-                                break;
+                                    $text = str_replace('{' . $key . '}',
+                                        link_to_route($values[0], $values[1], $values[2]), $text);
+                                    break;
 
                                 case 4:
-                                    $text = str_replace('{'.$key.'}', link_to_route($values[0], $values[1], $values[2], $values[3]), $text);
-                                break;
+                                    $text = str_replace('{' . $key . '}',
+                                        link_to_route($values[0], $values[1], $values[2], $values[3]), $text);
+                                    break;
                             }
                         } else {
                             //Normal url
-                            $text = str_replace('{'.$key.'}', link_to($values, $values), $text);
+                            $text = str_replace('{' . $key . '}', link_to($values, $values), $text);
                         }
 
-                    break;
+                        break;
 
                     case 'string':
-                        $text = str_replace('{'.$key.'}', $values, $text);
-                    break;
+                        $text = str_replace('{' . $key . '}', $values, $text);
+                        break;
                 }
 
                 $count++;
@@ -282,57 +336,5 @@ class EloquentHistoryRepository implements HistoryContract
         }
 
         return '';
-    }
-
-    /**
-     * @param $history
-     * @param bool $paginate
-     *
-     * @return string
-     */
-    public function buildList($history, $paginate = true)
-    {
-        return view('backend.history.partials.list', ['history' => $history, 'paginate' => $paginate])
-            ->render();
-    }
-
-    /**
-     * @param $query
-     * @param $limit
-     * @param $paginate
-     * @param $pagination
-     *
-     * @return mixed
-     */
-    public function buildPagination($query, $limit, $paginate, $pagination)
-    {
-        if ($paginate && is_numeric($pagination)) {
-            return $query->{$this->paginationType}($pagination);
-        } else {
-            if ($limit && is_numeric($limit)) {
-                $query->take($limit);
-            }
-
-            return $query->get();
-        }
-    }
-
-    /**
-     * @param $query
-     * @param $type
-     *
-     * @return mixed
-     */
-    private function checkType($query, $type)
-    {
-        if (is_numeric($type)) {
-            return $query->where('type_id', $type)->latest();
-        } else {
-            $type = strtolower($type);
-
-            return $query->whereHas('type', function ($query) use ($type) {
-                $query->where('name', ucfirst($type));
-            })->latest();
-        }
     }
 }

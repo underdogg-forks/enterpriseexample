@@ -12,8 +12,8 @@ class Faq extends BaseModel
     use ModelTrait,
         SoftDeletes,
         FaqAttribute {
-            // FaqAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+        // FaqAttribute::getEditButtonAttribute insteadof ModelTrait;
+    }
 
     /**
      * The database table used by the model.

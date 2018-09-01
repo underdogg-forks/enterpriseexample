@@ -14,8 +14,8 @@ class BlogCategory extends BaseModel
         SoftDeletes,
         BlogCategoryAttribute,
         BlogCategoryRelationship {
-            // BlogCategoryAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+        // BlogCategoryAttribute::getEditButtonAttribute insteadof ModelTrait;
+    }
 
     /**
      * The database table used by the model.

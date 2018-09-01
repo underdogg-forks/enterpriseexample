@@ -22,13 +22,13 @@ class PagesTableSeeder extends Seeder
 
         $page = [
             [
-                'title'       => 'Terms and conditions',
-                'page_slug'   => 'terms-and-conditions',
+                'title' => 'Terms and conditions',
+                'page_slug' => 'terms-and-conditions',
                 'description' => 'terms and conditions',
-                'status'      => '1',
-                'created_by'  => '1',
-                'created_at'  => Carbon::now(),
-                'updated_at'  => Carbon::now(),
+                'status' => '1',
+                'created_by' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
         ];
 

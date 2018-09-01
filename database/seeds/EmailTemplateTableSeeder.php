@@ -19,10 +19,10 @@ class EmailTemplateTableSeeder extends Seeder
 
         $data = [
             [
-                'title'   => 'User Registration',
+                'title' => 'User Registration',
                 'type_id' => '1',
                 'subject' => 'You have succesfully registerd',
-                'body'    => '<center>
+                'body' => '<center>
 <table id="bodyTable" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
 <tbody>
 <tr>
@@ -75,7 +75,7 @@ class EmailTemplateTableSeeder extends Seeder
 </tbody>
 </table>
 </center>',
-                'status'     => '1',
+                'status' => '1',
                 'created_by' => '1',
                 'updated_by' => null,
                 'created_at' => Carbon::now(),
@@ -83,10 +83,10 @@ class EmailTemplateTableSeeder extends Seeder
             ],
 
             [
-                'title'   => 'Create User',
+                'title' => 'Create User',
                 'type_id' => '2',
                 'subject' => 'Congratulations! your account has been created',
-                'body'    => '<center>
+                'body' => '<center>
 <table id="bodyTable" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
 <tbody>
 <tr>
@@ -147,7 +147,7 @@ class EmailTemplateTableSeeder extends Seeder
 </tbody>
 </table>
 </center>',
-                'status'     => '1',
+                'status' => '1',
                 'created_by' => '1',
                 'updated_by' => null,
                 'created_at' => Carbon::now(),
@@ -155,10 +155,10 @@ class EmailTemplateTableSeeder extends Seeder
             ],
 
             [
-                'title'   => 'Activate / Deactivate User',
+                'title' => 'Activate / Deactivate User',
                 'type_id' => '3',
                 'subject' => 'Your account has been [status]',
-                'body'    => '<center>
+                'body' => '<center>
 <table id="bodyTable" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
 <tbody>
 <tr>
@@ -211,7 +211,7 @@ class EmailTemplateTableSeeder extends Seeder
 </tbody>
 </table>
 </center>',
-                'status'     => '1',
+                'status' => '1',
                 'created_by' => '1',
                 'updated_by' => null,
                 'created_at' => Carbon::now(),
@@ -219,10 +219,10 @@ class EmailTemplateTableSeeder extends Seeder
             ],
 
             [
-                'title'   => 'Change Password',
+                'title' => 'Change Password',
                 'type_id' => '4',
                 'subject' => 'Your passwprd has been changed successfully',
-                'body'    => '<center>
+                'body' => '<center>
 <table id="bodyTable" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
 <tbody>
 <tr>
@@ -277,7 +277,7 @@ class EmailTemplateTableSeeder extends Seeder
 </tbody>
 </table>
 </center>',
-                'status'     => '1',
+                'status' => '1',
                 'created_by' => '1',
                 'updated_by' => null,
                 'created_at' => Carbon::now(),

@@ -29,8 +29,8 @@ class UpdateProfileRequest extends Request
     {
         return [
             'first_name' => 'required|max:255',
-            'last_name'  => 'required|max:255',
-            'email'      => ['sometimes', 'required', 'email', 'max:255', Rule::unique('users')],
+            'last_name' => 'required|max:255',
+            'email' => ['sometimes', 'required', 'email', 'max:255', Rule::unique('users')],
         ];
     }
 }

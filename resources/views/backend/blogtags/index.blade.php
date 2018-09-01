@@ -20,27 +20,27 @@
             <div class="table-responsive data-table-wrapper">
                 <table id="blogtags-table" class="table table-condensed table-hover table-bordered">
                     <thead>
-                        <tr>
-                            <th>{{ trans('labels.backend.blogtags.table.title') }}</th>
-                            <th>{{ trans('labels.backend.blogtags.table.status') }}</th>
-                            <th>{{ trans('labels.backend.blogtags.table.createdby') }}</th>
-                            <th>{{ trans('labels.backend.blogtags.table.createdat') }}</th>
-                            <th>{{ trans('labels.general.actions') }}</th>
-                        </tr>
+                    <tr>
+                        <th>{{ trans('labels.backend.blogtags.table.title') }}</th>
+                        <th>{{ trans('labels.backend.blogtags.table.status') }}</th>
+                        <th>{{ trans('labels.backend.blogtags.table.createdby') }}</th>
+                        <th>{{ trans('labels.backend.blogtags.table.createdat') }}</th>
+                        <th>{{ trans('labels.general.actions') }}</th>
+                    </tr>
                     </thead>
                     <thead class="transparent-bg">
-                        <tr>
-                            <th>
-                                {!! Form::text('title', null, ["class" => "search-input-text form-control", "data-column" => 0, "placeholder" => trans('labels.backend.blogtags.table.title')]) !!}
-                                    <a class="reset-data" href="javascript:void(0)"><i class="fa fa-times"></i></a>
-                            </th>
-                            <th>
-                                {!! Form::select('status', [0 => "InActive", 1 => "Active"], null, ["class" => "search-input-select form-control", "data-column" => 1, "placeholder" => trans('labels.backend.blogtags.table.all')]) !!}
-                            </th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>
+                            {!! Form::text('title', null, ["class" => "search-input-text form-control", "data-column" => 0, "placeholder" => trans('labels.backend.blogtags.table.title')]) !!}
+                            <a class="reset-data" href="javascript:void(0)"><i class="fa fa-times"></i></a>
+                        </th>
+                        <th>
+                            {!! Form::select('status', [0 => "InActive", 1 => "Active"], null, ["class" => "search-input-select form-control", "data-column" => 1, "placeholder" => trans('labels.backend.blogtags.table.all')]) !!}
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                     </thead>
                 </table>
             </div><!--table-responsive-->
@@ -53,10 +53,10 @@
             <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div><!-- /.box tools -->
-        </div><!-- /.box-header -->
-        <div class="box-body">
-            {{-- {!! history()->renderType('BlogTag') !!} --}}
-        </div><!-- /.box-body -->
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        {{-- {!! history()->renderType('BlogTag') !!} --}}
+    </div><!-- /.box-body -->
     </div><!--box box-info-->
 @endsection
 
@@ -65,7 +65,7 @@
     {{ Html::script(mix('js/dataTable.js')) }}
 
     <script>
-        $(function() {
+        $(function () {
             var dataTable = $('#blogtags-table').dataTable({
                 processing: true,
                 serverSide: true,
@@ -85,11 +85,11 @@
                 dom: 'lBfrtip',
                 buttons: {
                     buttons: [
-                        { extend: 'copy', className: 'copyButton',  exportOptions: {columns: [ 0, 1, 2, 3 ]  }},
-                        { extend: 'csv', className: 'csvButton',  exportOptions: {columns: [ 0, 1, 2, 3 ]  }},
-                        { extend: 'excel', className: 'excelButton',  exportOptions: {columns: [ 0, 1, 2, 3 ]  }},
-                        { extend: 'pdf', className: 'pdfButton',  exportOptions: {columns: [ 0, 1, 2, 3 ]  }},
-                        { extend: 'print', className: 'printButton',  exportOptions: {columns: [ 0, 1, 2, 3 ]  }}
+                        {extend: 'copy', className: 'copyButton', exportOptions: {columns: [0, 1, 2, 3]}},
+                        {extend: 'csv', className: 'csvButton', exportOptions: {columns: [0, 1, 2, 3]}},
+                        {extend: 'excel', className: 'excelButton', exportOptions: {columns: [0, 1, 2, 3]}},
+                        {extend: 'pdf', className: 'pdfButton', exportOptions: {columns: [0, 1, 2, 3]}},
+                        {extend: 'print', className: 'printButton', exportOptions: {columns: [0, 1, 2, 3]}}
                     ]
                 }
             });

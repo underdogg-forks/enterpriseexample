@@ -43,14 +43,14 @@ class SettingsRepository extends BaseRepository
      */
     public function __construct()
     {
-        $this->site_logo_path = 'img'.DIRECTORY_SEPARATOR.'logo'.DIRECTORY_SEPARATOR;
-        $this->favicon_path = 'img'.DIRECTORY_SEPARATOR.'favicon'.DIRECTORY_SEPARATOR;
+        $this->site_logo_path = 'img' . DIRECTORY_SEPARATOR . 'logo' . DIRECTORY_SEPARATOR;
+        $this->favicon_path = 'img' . DIRECTORY_SEPARATOR . 'favicon' . DIRECTORY_SEPARATOR;
         $this->storage = Storage::disk('public');
     }
 
     /**
      * @param \App\Models\Settings\Setting $setting
-     * @param array                        $input
+     * @param array $input
      *
      * @throws \App\Exceptions\GeneralException
      *
@@ -80,26 +80,13 @@ class SettingsRepository extends BaseRepository
     /*
      * Upload logo image
      */
-    public function uploadLogo($setting, $logo, $type)
-    {
-        $path = $type == 'logo' ? $this->site_logo_path : $this->favicon_path;
 
-        $image_name = time().$logo->getClientOriginalName();
-
-        $this->storage->put($path.$image_name, file_get_contents($logo->getRealPath()));
-
-        return $image_name;
-    }
-
-    /*
-     * remove logo or favicon icon
-     */
     public function removeLogo(Setting $setting, $type)
     {
         $path = $type == 'logo' ? $this->site_logo_path : $this->favicon_path;
 
-        if ($setting->$type && $this->storage->exists($path.$setting->$type)) {
-            $this->storage->delete($path.$setting->$type);
+        if ($setting->$type && $this->storage->exists($path . $setting->$type)) {
+            $this->storage->delete($path . $setting->$type);
         }
 
         $result = $setting->update([$type => null]);
@@ -109,5 +96,20 @@ class SettingsRepository extends BaseRepository
         }
 
         throw new GeneralException(trans('exceptions.backend.settings.update_error'));
+    }
+
+    /*
+     * remove logo or favicon icon
+     */
+
+    public function uploadLogo($setting, $logo, $type)
+    {
+        $path = $type == 'logo' ? $this->site_logo_path : $this->favicon_path;
+
+        $image_name = time() . $logo->getClientOriginalName();
+
+        $this->storage->put($path . $image_name, file_get_contents($logo->getRealPath()));
+
+        return $image_name;
     }
 }

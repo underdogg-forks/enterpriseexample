@@ -11,9 +11,9 @@ $factory->define(Permission::class, function (Generator $faker) {
     $name = $faker->word;
 
     return [
-        'name'          => $name,
-        'display_name'  => $name,
-        'sort'          => $faker->numberBetween(1, 100),
+        'name' => $name,
+        'display_name' => $name,
+        'sort' => $faker->numberBetween(1, 100),
     ];
 });
 

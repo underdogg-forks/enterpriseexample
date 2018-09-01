@@ -73,10 +73,34 @@ class RolesController extends APIController
     }
 
     /**
+     * validateUser Role Requests.
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return Validator object
+     */
+    public function validateRole(Request $request, $id = 0)
+    {
+        $permissions = '';
+
+        if ($request->post('associated_permissions') != 'all') {
+            $permissions = 'required';
+        }
+
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|max:191|unique:roles,name,' . $id,
+            'permissions' => $permissions,
+        ]);
+
+        return $validation;
+    }
+
+    /**
      * Update Role.
      *
      * @param Request $request
-     * @param Role    $role
+     * @param Role $role
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -98,7 +122,7 @@ class RolesController extends APIController
     /**
      *  Delete Role.
      *
-     * @param Role    $role
+     * @param Role $role
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
@@ -108,32 +132,8 @@ class RolesController extends APIController
         $this->repository->delete($role);
 
         return $this->respond([
-            'data'    => $role->id,
+            'data' => $role->id,
             'message' => trans('alerts.backend.roles.deleted'),
         ]);
-    }
-
-    /**
-     * validateUser Role Requests.
-     *
-     * @param Request $request
-     * @param int     $id
-     *
-     * @return Validator object
-     */
-    public function validateRole(Request $request, $id = 0)
-    {
-        $permissions = '';
-
-        if ($request->post('associated_permissions') != 'all') {
-            $permissions = 'required';
-        }
-
-        $validation = Validator::make($request->all(), [
-            'name'        => 'required|max:191|unique:roles,name,'.$id,
-            'permissions' => $permissions,
-        ]);
-
-        return $validation;
     }
 }

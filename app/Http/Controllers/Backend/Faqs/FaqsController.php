@@ -67,13 +67,14 @@ class FaqsController extends Controller
     {
         $this->faq->create($request->all());
 
-        return new RedirectResponse(route('admin.faqs.index'), ['flash_success' => trans('alerts.backend.faqs.created')]);
+        return new RedirectResponse(route('admin.faqs.index'),
+            ['flash_success' => trans('alerts.backend.faqs.created')]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Faqs\Faq                            $faq
+     * @param \App\Models\Faqs\Faq $faq
      * @param \App\Http\Requests\Backend\Faqs\EditFaqsRequest $request
      *
      * @return \App\Http\Responses\Backend\Faq\EditResponse
@@ -87,7 +88,7 @@ class FaqsController extends Controller
      * Update the specified resource in storage.
      *
      * @param \App\Http\Requests\Backend\Faqs\UpdateFaqsRequest $request
-     * @param \App\Models\Faqs\Faq                              $id
+     * @param \App\Models\Faqs\Faq $id
      *
      * @return \App\Http\Responses\RedirectResponse
      */
@@ -95,13 +96,14 @@ class FaqsController extends Controller
     {
         $this->faq->update($faq, $request->all());
 
-        return new RedirectResponse(route('admin.faqs.index'), ['flash_success' => trans('alerts.backend.faqs.updated')]);
+        return new RedirectResponse(route('admin.faqs.index'),
+            ['flash_success' => trans('alerts.backend.faqs.updated')]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Faqs\Faq                              $faq
+     * @param \App\Models\Faqs\Faq $faq
      * @param \App\Http\Requests\Backend\Faqs\DeleteFaqsRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -110,6 +112,7 @@ class FaqsController extends Controller
     {
         $this->faq->delete($faq);
 
-        return new RedirectResponse(route('admin.faqs.index'), ['flash_success' => trans('alerts.backend.faqs.deleted')]);
+        return new RedirectResponse(route('admin.faqs.index'),
+            ['flash_success' => trans('alerts.backend.faqs.deleted')]);
     }
 }

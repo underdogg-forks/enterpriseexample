@@ -57,7 +57,7 @@ interface HistoryContract
     /**
      * @param null $limit
      * @param bool $paginate
-     * @param int  $pagination
+     * @param int $pagination
      *
      * @return mixed
      */
@@ -67,7 +67,7 @@ interface HistoryContract
      * @param $type
      * @param null $limit
      * @param bool $paginate
-     * @param int  $pagination
+     * @param int $pagination
      *
      * @return mixed
      */
@@ -78,7 +78,7 @@ interface HistoryContract
      * @param $entity_id
      * @param null $limit
      * @param bool $paginate
-     * @param int  $pagination
+     * @param int $pagination
      *
      * @return mixed
      */

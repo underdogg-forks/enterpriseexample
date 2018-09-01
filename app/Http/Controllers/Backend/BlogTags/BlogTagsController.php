@@ -62,11 +62,12 @@ class BlogTagsController extends Controller
     {
         $this->blogtag->create($request->except('token'));
 
-        return new RedirectResponse(route('admin.blogTags.index'), ['flash_success' => trans('alerts.backend.blogtags.created')]);
+        return new RedirectResponse(route('admin.blogTags.index'),
+            ['flash_success' => trans('alerts.backend.blogtags.created')]);
     }
 
     /**
-     * @param \App\Models\BlogTags\BlogTag                            $blogTag
+     * @param \App\Models\BlogTags\BlogTag $blogTag
      * @param \App\Http\Requests\Backend\BlogTags\EditBlogTagsRequest $request
      *
      * @return \App\Http\Responses\Backend\BlogTag\EditResponse
@@ -77,7 +78,7 @@ class BlogTagsController extends Controller
     }
 
     /**
-     * @param \App\Models\BlogTags\BlogTag                              $blogTag
+     * @param \App\Models\BlogTags\BlogTag $blogTag
      * @param \App\Http\Requests\Backend\BlogTags\UpdateBlogTagsRequest $request
      *
      * @return mixed
@@ -86,11 +87,12 @@ class BlogTagsController extends Controller
     {
         $this->blogtag->update($blogTag, $request->except(['_method', '_token']));
 
-        return new RedirectResponse(route('admin.blogTags.index'), ['flash_success' => trans('alerts.backend.blogtags.updated')]);
+        return new RedirectResponse(route('admin.blogTags.index'),
+            ['flash_success' => trans('alerts.backend.blogtags.updated')]);
     }
 
     /**
-     * @param \App\Models\BlogTags\BlogTag                              $blogTag
+     * @param \App\Models\BlogTags\BlogTag $blogTag
      * @param \App\Http\Requests\Backend\BlogTags\DeleteBlogTagsRequest $request
      *
      * @return mixed
@@ -99,6 +101,7 @@ class BlogTagsController extends Controller
     {
         $this->blogtag->delete($blogTag);
 
-        return new RedirectResponse(route('admin.blogTags.index'), ['flash_success' => trans('alerts.backend.blogtags.deleted')]);
+        return new RedirectResponse(route('admin.blogTags.index'),
+            ['flash_success' => trans('alerts.backend.blogtags.deleted')]);
     }
 }

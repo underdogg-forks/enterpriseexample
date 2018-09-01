@@ -21,8 +21,8 @@ class CreateResponse implements Responsable
     {
         return view('backend.blogs.create')->with([
             'blogCategories' => $this->blogCategories,
-            'blogTags'       => $this->blogTags,
-            'status'         => $this->status,
+            'blogTags' => $this->blogTags,
+            'status' => $this->status,
         ]);
     }
 }

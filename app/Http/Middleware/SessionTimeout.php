@@ -34,7 +34,7 @@ class SessionTimeout
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
+     * @param \Closure $next
      *
      * @return mixed
      */
@@ -54,7 +54,7 @@ class SessionTimeout
                 $email = $request->user()->email;
                 access()->logout();
 
-                return redirect()->route('frontend.auth.login')->withFlashWarning(trans('strings.backend.general.timeout').$this->timeout / 60 .trans('strings.backend.general.minutes'))->withInput(compact('email'))->withCookie($cookie);
+                return redirect()->route('frontend.auth.login')->withFlashWarning(trans('strings.backend.general.timeout') . $this->timeout / 60 . trans('strings.backend.general.minutes'))->withInput(compact('email'))->withCookie($cookie);
             }
 
             $isLoggedIn ? $this->session->put('lastActivityTime', time()) : $this->session->forget('lastActivityTime');

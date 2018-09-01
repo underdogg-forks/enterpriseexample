@@ -19,7 +19,7 @@ class CMSPageEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->cmspages->id)
-            ->withText('trans("history.backend.cmspages.created") <strong>'.$event->cmspages->title.'</strong>')
+            ->withText('trans("history.backend.cmspages.created") <strong>' . $event->cmspages->title . '</strong>')
             ->withIcon('plus')
             ->withClass('bg-green')
             ->log();
@@ -32,7 +32,7 @@ class CMSPageEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->cmspages->id)
-            ->withText('trans("history.backend.cmspages.updated") <strong>'.$event->cmspages->title.'</strong>')
+            ->withText('trans("history.backend.cmspages.updated") <strong>' . $event->cmspages->title . '</strong>')
             ->withIcon('save')
             ->withClass('bg-aqua')
             ->log();
@@ -45,7 +45,7 @@ class CMSPageEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->cmspages->id)
-            ->withText('trans("history.backend.cmspages.deleted") <strong>'.$event->cmspages->title.'</strong>')
+            ->withText('trans("history.backend.cmspages.deleted") <strong>' . $event->cmspages->title . '</strong>')
             ->withIcon('trash')
             ->withClass('bg-maroon')
             ->log();

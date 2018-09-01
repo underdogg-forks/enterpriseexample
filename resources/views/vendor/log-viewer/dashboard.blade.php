@@ -32,7 +32,8 @@
                                                     {{ $item['count'] }} entries - {!! $item['percent'] !!} %
                                                 </span>
                                                 <div class="progress">
-                                                    <div class="progress-bar" style="width: {{ $item['percent'] }}%"></div>
+                                                    <div class="progress-bar"
+                                                         style="width: {{ $item['percent'] }}%"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -49,7 +50,7 @@
 
 @section('after-scripts-end')
     <script>
-        $(function() {
+        $(function () {
             new Chart($('canvas#stats-doughnut-chart'), {
                 type: 'doughnut',
                 data: {!! $chartData !!},

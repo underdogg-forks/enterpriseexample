@@ -33,12 +33,12 @@ class RegisterController extends APIController
     public function register(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'first_name'            => 'required',
-            'last_name'             => 'required',
-            'email'                 => 'required|email|unique:users',
-            'password'              => 'required|min:4',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:4',
             'password_confirmation' => 'required|same:password',
-            'is_term_accept'        => 'required',
+            'is_term_accept' => 'required',
         ]);
 
         if ($validation->fails()) {
@@ -49,15 +49,15 @@ class RegisterController extends APIController
 
         if (!Config::get('api.register.release_token')) {
             return $this->respondCreated([
-                'message'  => trans('api.messages.registeration.success'),
+                'message' => trans('api.messages.registeration.success'),
             ]);
         }
 
         $token = JWTAuth::fromUser($user);
 
         return $this->respondCreated([
-            'message'   => trans('api.messages.registeration.success'),
-            'token'     => $token,
+            'message' => trans('api.messages.registeration.success'),
+            'token' => $token,
         ]);
     }
 }

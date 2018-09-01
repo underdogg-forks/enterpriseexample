@@ -40,7 +40,7 @@ class StoreApiBlogTagsRequest extends Request
     {
         return [
             'name.required' => 'Blog Tag name is a required field.111111',
-            'name.max'      => 'Blog Tag may not be greater than 191 characters.',
+            'name.max' => 'Blog Tag may not be greater than 191 characters.',
         ];
     }
 }

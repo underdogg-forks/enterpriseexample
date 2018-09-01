@@ -8,88 +8,89 @@ class SendEmail
 {
     public function sendWithTemplate($data, $typeId)
     {
-        $template = \DB::table('email_templates')->where('type_id', $typeId)->where('status', 1)->orderBy('updated_at', 'DESC')->first();
+        $template = \DB::table('email_templates')->where('type_id', $typeId)->where('status', 1)->orderBy('updated_at',
+            'DESC')->first();
 
         if (!empty($template)) {
             switch ($typeId) {
 
-            case '1':
-                // When user register from frontend
-                $content = $template->body;
+                case '1':
+                    // When user register from frontend
+                    $content = $template->body;
 
-                // Replace app name
-                $content = str_replace('[app_name]', app_name(), $content);
+                    // Replace app name
+                    $content = str_replace('[app_name]', app_name(), $content);
 
-                // Replace user firstname
-                $content = str_replace('[name]', $data['first_name'], $content);
+                    // Replace user firstname
+                    $content = str_replace('[name]', $data['first_name'], $content);
 
-                // Replace confirmation link
-                $url = '<a href='.url('account/confirm/'.$data['confirmation_code']).'>Click Here</a>';
-                $content = str_replace('[confirmation_link]', $url, $content);
+                    // Replace confirmation link
+                    $url = '<a href=' . url('account/confirm/' . $data['confirmation_code']) . '>Click Here</a>';
+                    $content = str_replace('[confirmation_link]', $url, $content);
 
-                // User email
-                $data['to'] = $data['email'];
+                    // User email
+                    $data['to'] = $data['email'];
 
-                // Subject of mail
-                $data['subject'] = $template->subject;
-              break;
+                    // Subject of mail
+                    $data['subject'] = $template->subject;
+                    break;
 
-            case '2':
+                case '2':
 
                     $content = $template->body;
 
-                // Replace app name
-                $content = str_replace('[app_name]', app_name(), $content);
+                    // Replace app name
+                    $content = str_replace('[app_name]', app_name(), $content);
 
-                // Replace user firstname
-                $content = str_replace('[name]', $data['first_name'], $content);
+                    // Replace user firstname
+                    $content = str_replace('[name]', $data['first_name'], $content);
 
-                // Replace user email
-                $content = str_replace('[email]', $data['email'], $content);
+                    // Replace user email
+                    $content = str_replace('[email]', $data['email'], $content);
 
-                // Replace user password
-                $content = str_replace('[password]', $data['password'], $content);
+                    // Replace user password
+                    $content = str_replace('[password]', $data['password'], $content);
 
-                $data['to'] = $data['email'];
-                $data['subject'] = $template->subject;
-              break;
+                    $data['to'] = $data['email'];
+                    $data['subject'] = $template->subject;
+                    break;
 
-            case '3':
-                $content = $template->body;
+                case '3':
+                    $content = $template->body;
 
-                // Replace status in subject
-                $status = $data->status == 0 ? 'Deactivated' : 'Activated';
-                $subject = str_replace('[status]', $status, $template->subject);
+                    // Replace status in subject
+                    $status = $data->status == 0 ? 'Deactivated' : 'Activated';
+                    $subject = str_replace('[status]', $status, $template->subject);
 
-                // Replace status in email body
-                $content = str_replace('[status]', $status, $content);
+                    // Replace status in email body
+                    $content = str_replace('[status]', $status, $content);
 
-                // Replace app name
-                $content = str_replace('[app_name]', app_name(), $content);
+                    // Replace app name
+                    $content = str_replace('[app_name]', app_name(), $content);
 
-                $data['to'] = $data['email'];
-                $data['subject'] = $subject;
+                    $data['to'] = $data['email'];
+                    $data['subject'] = $subject;
 
-              break;
+                    break;
 
-          case '4':
-                $content = $template->body;
+                case '4':
+                    $content = $template->body;
 
-                // Replace status in email body
-                $content = str_replace('[password]', $data['password'], $content);
+                    // Replace status in email body
+                    $content = str_replace('[password]', $data['password'], $content);
 
-                // Replace app name
-                $content = str_replace('[app_name]', app_name(), $content);
+                    // Replace app name
+                    $content = str_replace('[app_name]', app_name(), $content);
 
-                $data['to'] = $data['email'];
-                $data['subject'] = $template->subject;
+                    $data['to'] = $data['email'];
+                    $data['subject'] = $template->subject;
 
-              break;
+                    break;
 
-            default:
-                echo 'Default case';
-              break;
-          }
+                default:
+                    echo 'Default case';
+                    break;
+            }
             // Send email code
             $message = ['data' => $content];
 

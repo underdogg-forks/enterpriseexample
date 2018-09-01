@@ -19,57 +19,57 @@ class EmailTemplatePlaceholderTableSeeder extends Seeder
 
         $data = [
             [
-                'name'       => 'app_name',
+                'name' => 'app_name',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name'       => 'name',
+                'name' => 'name',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name'       => 'email',
+                'name' => 'email',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name'       => 'password',
+                'name' => 'password',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name'       => 'contact-details',
+                'name' => 'contact-details',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name'       => 'confirmation_link',
+                'name' => 'confirmation_link',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name'       => 'password_reset_link',
+                'name' => 'password_reset_link',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name'       => 'header_logo',
+                'name' => 'header_logo',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name'       => 'footer_logo',
+                'name' => 'footer_logo',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name'       => 'unscribe_link',
+                'name' => 'unscribe_link',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name'       => 'status',
+                'name' => 'status',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

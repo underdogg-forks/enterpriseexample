@@ -73,10 +73,35 @@ class UsersController extends APIController
     }
 
     /**
+     * validateUser User.
+     *
+     * @param $request
+     * @param $action
+     * @param $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function validateUser(Request $request, $action = '', $id = 0)
+    {
+        $password = ($action == 'edit') ? '' : 'required|min:6|confirmed';
+
+        $validation = Validator::make($request->all(), [
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'email' => 'required|max:255|email|unique:users,email,' . $id,
+            'password' => $password,
+            'assignees_roles' => 'required',
+            'permissions' => 'required',
+        ]);
+
+        return $validation;
+    }
+
+    /**
      * Update User.
      *
      * @param Request $request
-     * @param User    $user
+     * @param User $user
      *
      * @return Validator object
      */
@@ -98,7 +123,7 @@ class UsersController extends APIController
     /**
      * Delete User.
      *
-     * @param User    $user
+     * @param User $user
      * @param Request $request
      *
      * @return mixed
@@ -108,8 +133,8 @@ class UsersController extends APIController
         $this->repository->delete($user);
 
         return $this->respond([
-            'data'      => $user->id,
-            'message'   => trans('alerts.backend.users.deleted'),
+            'data' => $user->id,
+            'message' => trans('alerts.backend.users.deleted'),
         ]);
     }
 
@@ -130,37 +155,12 @@ class UsersController extends APIController
 
         if ($result) {
             return $this->respond([
-                'message'   => trans('alerts.backend.users.deleted'),
+                'message' => trans('alerts.backend.users.deleted'),
             ]);
         }
 
         return $this->respond([
-            'message'   => trans('exceptions.backend.access.users.not_found'),
+            'message' => trans('exceptions.backend.access.users.not_found'),
         ]);
-    }
-
-    /**
-     * validateUser User.
-     *
-     * @param $request
-     * @param $action
-     * @param $id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function validateUser(Request $request, $action = '', $id = 0)
-    {
-        $password = ($action == 'edit') ? '' : 'required|min:6|confirmed';
-
-        $validation = Validator::make($request->all(), [
-            'first_name'      => 'required|max:255',
-            'last_name'       => 'required|max:255',
-            'email'           => 'required|max:255|email|unique:users,email,'.$id,
-            'password'        => $password,
-            'assignees_roles' => 'required',
-            'permissions'     => 'required',
-        ]);
-
-        return $validation;
     }
 }

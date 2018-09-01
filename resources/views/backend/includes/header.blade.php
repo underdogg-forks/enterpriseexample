@@ -14,8 +14,8 @@
             @if($settings->logo)
                 <img height="48" width="226" class="navbar-brand" src="{{route('frontend.index')}}/img/site_logo/{{$settings->logo}}">
             @else --}}
-                {{ app_name() }}
-           {{--  @endif --}}
+            {{ app_name() }}
+            {{--  @endif --}}
         </span>
     </a>
 
@@ -30,7 +30,8 @@
                 @if (config('locale.status') && count(config('locale.languages')) > 1)
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <i class="fa fa-language"></i> {{ trans('menus.language-picker.language') }} <span class="caret"></span>
+                            <i class="fa fa-language"></i> {{ trans('menus.language-picker.language') }} <span
+                                    class="caret"></span>
                         </a>
                         @include('includes.partials.lang')
                     </li>
@@ -83,7 +84,7 @@
 
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="user-header">
-                            <img src="{{ access()->user()->picture }}" class="img-circle" alt="User Avatar" />
+                            <img src="{{ access()->user()->picture }}" class="img-circle" alt="User Avatar"/>
                             <p>
                                 {{-- access()->user()->name }} - {{ implode(", ", access()->user()->roles->lists('name')->toArray()) --}}
                                 <small>{{ trans('strings.backend.general.member_since') }} {{ access()->user()->created_at->format("m/d/Y") }}</small>

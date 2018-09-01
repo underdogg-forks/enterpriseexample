@@ -14,8 +14,8 @@ class Blog extends BaseModel
         SoftDeletes,
         BlogAttribute,
         BlogRelationship {
-            // BlogAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+        // BlogAttribute::getEditButtonAttribute insteadof ModelTrait;
+    }
 
     protected $fillable = [
         'name',

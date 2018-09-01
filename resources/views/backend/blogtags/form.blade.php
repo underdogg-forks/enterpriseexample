@@ -13,13 +13,13 @@
         <div class="col-lg-10">
             <div class="control-group">
                 <label class="control control--checkbox">
-            @if(isset($blogtag->status) && !empty ($blogtag->status))
-                {{ Form::checkbox('status', 1, true) }}
-            @else
-                {{ Form::checkbox('status', 1, false) }}
-            @endif
-            <div class="control__indicator"></div>
+                    @if(isset($blogtag->status) && !empty ($blogtag->status))
+                        {{ Form::checkbox('status', 1, true) }}
+                    @else
+                        {{ Form::checkbox('status', 1, false) }}
+                    @endif
+                    <div class="control__indicator"></div>
                 </label>
-        </div><!--col-lg-3-->
-    </div><!--form control-->
-</div>
+            </div><!--col-lg-3-->
+        </div><!--form control-->
+    </div>

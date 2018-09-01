@@ -26,7 +26,7 @@ class SettingsController extends Controller
     }
 
     /**
-     * @param \App\Models\Settings\Setting                              $setting
+     * @param \App\Models\Settings\Setting $setting
      * @param \App\Http\Requests\Backend\Settings\ManageSettingsRequest $request
      *
      * @return \App\Http\Responses\Backend\Setting\EditResponse
@@ -37,7 +37,7 @@ class SettingsController extends Controller
     }
 
     /**
-     * @param \App\Models\Settings\Setting                              $setting
+     * @param \App\Models\Settings\Setting $setting
      * @param \App\Http\Requests\Backend\Settings\UpdateSettingsRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -46,6 +46,7 @@ class SettingsController extends Controller
     {
         $this->settings->update($setting, $request->except(['_token', '_method']));
 
-        return new RedirectResponse(route('admin.settings.edit', $setting->id), ['flash_success' => trans('alerts.backend.settings.updated')]);
+        return new RedirectResponse(route('admin.settings.edit', $setting->id),
+            ['flash_success' => trans('alerts.backend.settings.updated')]);
     }
 }

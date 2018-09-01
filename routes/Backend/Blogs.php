@@ -8,5 +8,5 @@ Route::group(['namespace' => 'Blogs'], function () {
 
     //For DataTables
     Route::post('blogs/get', 'BlogsTableController')
-       ->name('blogs.get');
+        ->name('blogs.get');
 });

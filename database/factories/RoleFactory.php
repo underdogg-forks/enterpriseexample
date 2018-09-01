@@ -9,7 +9,7 @@ use Faker\Generator;
 $factory->define(Role::class, function (Generator $faker) {
     return [
         'name' => $faker->name,
-        'all'  => 0,
+        'all' => 0,
         'sort' => $faker->numberBetween(1, 100),
     ];
 });

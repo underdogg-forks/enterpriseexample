@@ -15,16 +15,19 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active" id="li-profile">
-                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" class="tabs">{{ trans('navs.frontend.user.profile') }}</a>
+                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"
+                                   class="tabs">{{ trans('navs.frontend.user.profile') }}</a>
                             </li>
 
                             <li role="presentation" id="li-edit">
-                                <a href="#edit" aria-controls="edit" role="tab" data-toggle="tab" class="tabs">{{ trans('labels.frontend.user.profile.update_information') }}</a>
+                                <a href="#edit" aria-controls="edit" role="tab" data-toggle="tab"
+                                   class="tabs">{{ trans('labels.frontend.user.profile.update_information') }}</a>
                             </li>
 
                             @if ($logged_in_user->canChangePassword())
                                 <li role="presentation" id="li-password">
-                                    <a href="#password" aria-controls="password" role="tab" data-toggle="tab" class="tabs">{{ trans('navs.frontend.user.change_password') }}</a>
+                                    <a href="#password" aria-controls="password" role="tab" data-toggle="tab"
+                                       class="tabs">{{ trans('navs.frontend.user.change_password') }}</a>
                                 </li>
                             @endif
                         </ul>
@@ -62,37 +65,35 @@
 
 @section('after-scripts')
 
-<script type="text/javascript">
-    $(document).ready(function() {
+    <script type="text/javascript">
+        $(document).ready(function () {
 
-        // To Use Select2
-        Backend.Select2.init();
+            // To Use Select2
+            Backend.Select2.init();
 
-        if($.session.get("tab") == "edit")
-        {
-            $("#li-password").removeClass("active");
-            $("#li-profile").removeClass("active");
-            $("#li-edit").addClass("active");
+            if ($.session.get("tab") == "edit") {
+                $("#li-password").removeClass("active");
+                $("#li-profile").removeClass("active");
+                $("#li-edit").addClass("active");
 
-            $("#profile").removeClass("active");
-            $("#password").removeClass("active");
-            $("#edit").addClass("active");
-        }
-        else if($.session.get("tab") == "password")
-        {
-            $("#li-password").addClass("active");
-            $("#li-profile").removeClass("active");
-            $("#li-edit").removeClass("active");
+                $("#profile").removeClass("active");
+                $("#password").removeClass("active");
+                $("#edit").addClass("active");
+            }
+            else if ($.session.get("tab") == "password") {
+                $("#li-password").addClass("active");
+                $("#li-profile").removeClass("active");
+                $("#li-edit").removeClass("active");
 
-            $("#profile").removeClass("active");
-            $("#password").addClass("active");
-            $("#edit").removeClass("active");
-        }
+                $("#profile").removeClass("active");
+                $("#password").addClass("active");
+                $("#edit").removeClass("active");
+            }
 
-        $(".tabs").click(function() {
-            var tab = $(this).attr("aria-controls");
-            $.session.set("tab", tab);
+            $(".tabs").click(function () {
+                var tab = $(this).attr("aria-controls");
+                $.session.set("tab", tab);
+            });
         });
-    });
-</script>
+    </script>
 @endsection

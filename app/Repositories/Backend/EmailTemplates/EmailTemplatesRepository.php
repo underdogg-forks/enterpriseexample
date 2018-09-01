@@ -25,12 +25,12 @@ class EmailTemplatesRepository extends BaseRepository
     {
         return $this->query()
             ->select([
-                config('module.email_templates.table').'.id',
-                config('module.email_templates.table').'.title',
-                config('module.email_templates.table').'.subject',
-                config('module.email_templates.table').'.status',
-                config('module.email_templates.table').'.created_at',
-                config('module.email_templates.table').'.updated_at',
+                config('module.email_templates.table') . '.id',
+                config('module.email_templates.table') . '.title',
+                config('module.email_templates.table') . '.subject',
+                config('module.email_templates.table') . '.status',
+                config('module.email_templates.table') . '.created_at',
+                config('module.email_templates.table') . '.updated_at',
             ]);
     }
 

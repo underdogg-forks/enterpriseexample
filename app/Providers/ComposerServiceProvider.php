@@ -22,7 +22,7 @@ class ComposerServiceProvider extends ServiceProvider
          * Global
          */
         View::composer(
-            // This class binds the $logged_in_user variable to every view
+        // This class binds the $logged_in_user variable to every view
             '*', GlobalComposer::class
         );
 

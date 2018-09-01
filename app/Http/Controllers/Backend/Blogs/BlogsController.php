@@ -25,8 +25,8 @@ class BlogsController extends Controller
      */
     protected $status = [
         'Published' => 'Published',
-        'Draft'     => 'Draft',
-        'InActive'  => 'InActive',
+        'Draft' => 'Draft',
+        'InActive' => 'InActive',
         'Scheduled' => 'Scheduled',
     ];
 
@@ -75,11 +75,12 @@ class BlogsController extends Controller
     {
         $this->blog->create($request->except('_token'));
 
-        return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.created')]);
+        return new RedirectResponse(route('admin.blogs.index'),
+            ['flash_success' => trans('alerts.backend.blogs.created')]);
     }
 
     /**
-     * @param \App\Models\Blogs\Blog                              $blog
+     * @param \App\Models\Blogs\Blog $blog
      * @param \App\Http\Requests\Backend\Blogs\ManageBlogsRequest $request
      *
      * @return \App\Http\Responses\Backend\Blog\EditResponse
@@ -93,7 +94,7 @@ class BlogsController extends Controller
     }
 
     /**
-     * @param \App\Models\Blogs\Blog                              $blog
+     * @param \App\Models\Blogs\Blog $blog
      * @param \App\Http\Requests\Backend\Blogs\UpdateBlogsRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -104,11 +105,12 @@ class BlogsController extends Controller
 
         $this->blog->update($blog, $request->except(['_token', '_method']));
 
-        return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.updated')]);
+        return new RedirectResponse(route('admin.blogs.index'),
+            ['flash_success' => trans('alerts.backend.blogs.updated')]);
     }
 
     /**
-     * @param \App\Models\Blogs\Blog                              $blog
+     * @param \App\Models\Blogs\Blog $blog
      * @param \App\Http\Requests\Backend\Blogs\ManageBlogsRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -117,6 +119,7 @@ class BlogsController extends Controller
     {
         $this->blog->delete($blog);
 
-        return new RedirectResponse(route('admin.blogs.index'), ['flash_success' => trans('alerts.backend.blogs.deleted')]);
+        return new RedirectResponse(route('admin.blogs.index'),
+            ['flash_success' => trans('alerts.backend.blogs.deleted')]);
     }
 }

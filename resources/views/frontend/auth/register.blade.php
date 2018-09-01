@@ -48,12 +48,13 @@
                     </div><!--form-group-->
 
                     <div class="form-group">
-                            <div class="col-xs-7">
-                               <label class="col-md-12 control-label">
-                                 {!! Form::checkbox('is_term_accept',1,false) !!}
-                                 I accept {!! link_to_route('frontend.pages.show', trans('validation.attributes.frontend.register-user.terms_and_conditions').'*', ['page_slug'=>'terms-and-conditions']) !!} </label>
+                        <div class="col-xs-7">
+                            <label class="col-md-12 control-label">
+                                {!! Form::checkbox('is_term_accept',1,false) !!}
+                                I
+                                accept {!! link_to_route('frontend.pages.show', trans('validation.attributes.frontend.register-user.terms_and_conditions').'*', ['page_slug'=>'terms-and-conditions']) !!} </label>
 
-                         </div><!--form-group-->
+                        </div><!--form-group-->
                     </div><!--col-md-6-->
 
                     @if (config('access.captcha.registration'))
@@ -89,7 +90,7 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             // To Use Select2
             Backend.Select2.init();
         });

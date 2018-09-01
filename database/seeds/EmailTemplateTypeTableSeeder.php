@@ -19,25 +19,25 @@ class EmailTemplateTypeTableSeeder extends Seeder
 
         $data = [
             [
-                'name'       => 'Registration',
+                'name' => 'Registration',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
 
             [
-                'name'       => 'Create User',
+                'name' => 'Create User',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
 
             [
-                'name'       => 'Acivate / Deactivate User',
+                'name' => 'Acivate / Deactivate User',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
 
             [
-                'name'       => 'Change Password',
+                'name' => 'Change Password',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

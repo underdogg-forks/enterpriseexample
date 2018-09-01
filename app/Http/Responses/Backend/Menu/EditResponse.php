@@ -22,8 +22,8 @@ class EditResponse implements Responsable
     protected $menu;
 
     /**
-     * @param \App\Models\Menu\Menu    $menu
-     * @param array                    $types
+     * @param \App\Models\Menu\Menu $menu
+     * @param array $types
      * @param \Bvipul\Generator\Module $modules
      */
     public function __construct($menu, $types, $modules)
@@ -43,8 +43,8 @@ class EditResponse implements Responsable
     public function toResponse($request)
     {
         return view('backend.menus.edit')
-                ->with('types', $this->types)
-                ->with('menu', $this->menu)
-                ->with('modules', $this->modules->all());
+            ->with('types', $this->types)
+            ->with('menu', $this->menu)
+            ->with('modules', $this->modules->all());
     }
 }

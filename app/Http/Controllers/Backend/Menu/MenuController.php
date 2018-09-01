@@ -50,7 +50,7 @@ class MenuController extends Controller
         $this->modules = $module;
 
         $this->types = [
-            'backend'  => 'Backend',
+            'backend' => 'Backend',
             'frontend' => 'Frontend',
         ];
     }
@@ -90,13 +90,14 @@ class MenuController extends Controller
     {
         $this->menu->create($request->except('_token'));
 
-        return new RedirectResponse(route('admin.menus.index'), ['flash_success' => trans('alerts.backend.menus.created')]);
+        return new RedirectResponse(route('admin.menus.index'),
+            ['flash_success' => trans('alerts.backend.menus.created')]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Menu\Menu                           $menu
+     * @param \App\Models\Menu\Menu $menu
      * @param \App\Http\Requests\Backend\Menu\EditMenuRequest $request
      *
      * @return \App\Http\Responses\Backend\Menu\EditResponse
@@ -109,7 +110,7 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Models\Menu\Menu                             $menu
+     * @param \App\Models\Menu\Menu $menu
      * @param \App\Http\Requests\Backend\Menu\UpdateMenuRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -118,13 +119,14 @@ class MenuController extends Controller
     {
         $this->menu->update($menu, $request->all());
 
-        return new RedirectResponse(route('admin.menus.index'), ['flash_success' => trans('alerts.backend.menus.updated')]);
+        return new RedirectResponse(route('admin.menus.index'),
+            ['flash_success' => trans('alerts.backend.menus.updated')]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Menu\Menu                             $menu
+     * @param \App\Models\Menu\Menu $menu
      * @param \App\Http\Requests\Backend\Menu\DeleteMenuRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -133,6 +135,7 @@ class MenuController extends Controller
     {
         $this->menu->delete($menu);
 
-        return new RedirectResponse(route('admin.menus.index'), ['flash_success' => trans('alerts.backend.menus.deleted')]);
+        return new RedirectResponse(route('admin.menus.index'),
+            ['flash_success' => trans('alerts.backend.menus.deleted')]);
     }
 }

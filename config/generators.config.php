@@ -28,14 +28,14 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'model_target_path'   => app_path(),
+    'model_target_path' => app_path(),
 
-    'controller_target_path'   => app_path('Http/Controllers'),
+    'controller_target_path' => app_path('Http/Controllers'),
 
-    'migration_target_path'   => base_path('database/migrations'),
+    'migration_target_path' => base_path('database/migrations'),
 
-    'seed_target_path'   => base_path('database/seeds'),
+    'seed_target_path' => base_path('database/seeds'),
 
-    'view_target_path'   => base_path('resources/views'),
+    'view_target_path' => base_path('resources/views'),
 
 ];

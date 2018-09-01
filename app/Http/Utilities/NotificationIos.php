@@ -5,16 +5,13 @@ namespace App\Http\Utilities;
 class NotificationIos extends Notification
 {
     const BADGE_ID = 0;
-
-    protected $_passPhrase = null;            // for authentication of .pem file or password of .pem file
-    protected $_pemFile = null;            // for send notificetion .pem file is must add in that code
-    protected static $_url = 'ssl://gateway.sandbox.push.apple.com:2195';                                           // url for send push message
-
-    const ERROR_PEM_NOTACCESSIBLE = 1;          // exception error for file not get
-    const ERROR_PASSPHRASE_EMPTY = 2;          // exception error for passphrese empty
-    const ERROR_CONNECTION_FAILED = 3;          // exception error for connection failed
-
-    protected $sendNotification = 1;          // exception error for connection failed
+const ERROR_PEM_NOTACCESSIBLE = 1;            // for authentication of .pem file or password of .pem file
+    const ERROR_PASSPHRASE_EMPTY = 2;            // for send notificetion .pem file is must add in that code
+    const ERROR_CONNECTION_FAILED = 3;                                           // url for send push message
+protected static $_url = 'ssl://gateway.sandbox.push.apple.com:2195';          // exception error for file not get
+    protected $_passPhrase = null;          // exception error for passphrese empty
+    protected $_pemFile = null;          // exception error for connection failed
+protected $sendNotification = 1;          // exception error for connection failed
 
     /**
      * send push notification.
@@ -38,6 +35,37 @@ class NotificationIos extends Notification
      * @param array $sendOptions Send Options
      * @return boolean
      */
+
+    public function setPassPhrase($passPhrase)
+    {
+        $this->_passPhrase = $passPhrase;
+    }
+
+    public function setPemFile($pemFile = 'apns_baseproject_dev.pem')
+    {
+        $newPemFilePath = dirname(__FILE__) . '/' . $pemFile;
+        // echo $_SERVER['DOCUMENT_ROOT'].'/app/Http/Controllers/Utilities/'.$pemFile;exit;
+        //echo dirname(__FILE__); exit;
+        // echo file_get_contents(dirname(__FILE__).'/'.$pemFile); exit;
+        if (!(file_exists($newPemFilePath)) && !(is_readable($newPemFilePath))) {
+            $error = $this->raiseerror(self::ERROR_PEM_NOTACCESSIBLE);
+        }
+        $this->_pemFile = $newPemFilePath;
+    }
+
+    public function sendNotification($sendNotification)
+    {
+        $this->sendNotification = $sendNotification;
+    }
+
+    public function getErrorMessages()
+    {
+        return [
+            self::ERROR_PEM_NOTACCESSIBLE => 'Pem File Not Found',
+            self::ERROR_PASSPHRASE_EMPTY => 'Pass Phrase empty',
+            self::ERROR_CONNECTION_FAILED => 'Connect Failed',
+        ];
+    }
 
     protected function _send($deviceId, $message, $sendOptions = [])
     {
@@ -63,15 +91,15 @@ class NotificationIos extends Notification
 
         foreach ($deviceId as $singleId) {
             // Build the binary notification
-            $msg = chr(0).pack('n', 32).pack('H*', $singleId).pack('n', strlen($payload)).$payload;
+            $msg = chr(0) . pack('n', 32) . pack('H*', $singleId) . pack('n', strlen($payload)) . $payload;
             // Send it to the server
             $result = fwrite($fp, $msg, strlen($msg));
         }
         //echo "<br>-------<br>";
         if (!$result) {
-            return 'Message not delivered'.PHP_EOL;
+            return 'Message not delivered' . PHP_EOL;
         } else {
-            return 'Message successfully delivered'.PHP_EOL;
+            return 'Message successfully delivered' . PHP_EOL;
         }
 
         // Close the connection to the server
@@ -85,36 +113,5 @@ class NotificationIos extends Notification
         } else {
             return ['badge' => 0];
         }
-    }
-
-    public function sendNotification($sendNotification)
-    {
-        $this->sendNotification = $sendNotification;
-    }
-
-    public function setPassPhrase($passPhrase)
-    {
-        $this->_passPhrase = $passPhrase;
-    }
-
-    public function setPemFile($pemFile = 'apns_baseproject_dev.pem')
-    {
-        $newPemFilePath = dirname(__FILE__).'/'.$pemFile;
-        // echo $_SERVER['DOCUMENT_ROOT'].'/app/Http/Controllers/Utilities/'.$pemFile;exit;
-        //echo dirname(__FILE__); exit;
-        // echo file_get_contents(dirname(__FILE__).'/'.$pemFile); exit;
-        if (!(file_exists($newPemFilePath)) && !(is_readable($newPemFilePath))) {
-            $error = $this->raiseerror(self::ERROR_PEM_NOTACCESSIBLE);
-        }
-        $this->_pemFile = $newPemFilePath;
-    }
-
-    public function getErrorMessages()
-    {
-        return [
-            self::ERROR_PEM_NOTACCESSIBLE => 'Pem File Not Found',
-            self::ERROR_PASSPHRASE_EMPTY  => 'Pass Phrase empty',
-            self::ERROR_CONNECTION_FAILED => 'Connect Failed',
-        ];
     }
 }

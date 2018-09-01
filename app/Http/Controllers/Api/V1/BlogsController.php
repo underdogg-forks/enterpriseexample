@@ -71,9 +71,34 @@ class BlogsController extends APIController
     }
 
     /**
+     * validate Blog.
+     *
+     * @param $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function validateBlog(Request $request, $action = 'insert')
+    {
+        $featured_image = ($action == 'insert') ? 'required' : '';
+
+        $publish_datetime = $request->publish_datetime !== '' ? 'required|date' : 'required';
+
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|max:191',
+            'featured_image' => $featured_image,
+            'publish_datetime' => $publish_datetime,
+            'content' => 'required',
+            'categories' => 'required',
+            'tags' => 'required',
+        ]);
+
+        return $validation;
+    }
+
+    /**
      * Update blog.
      *
-     * @param Blog    $blog
+     * @param Blog $blog
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
@@ -96,7 +121,7 @@ class BlogsController extends APIController
     /**
      * Delete Blog.
      *
-     * @param Blog    $blog
+     * @param Blog $blog
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
@@ -111,31 +136,6 @@ class BlogsController extends APIController
     }
 
     /**
-     * validate Blog.
-     *
-     * @param $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function validateBlog(Request $request, $action = 'insert')
-    {
-        $featured_image = ($action == 'insert') ? 'required' : '';
-
-        $publish_datetime = $request->publish_datetime !== '' ? 'required|date' : 'required';
-
-        $validation = Validator::make($request->all(), [
-            'name'              => 'required|max:191',
-            'featured_image'    => $featured_image,
-            'publish_datetime'  => $publish_datetime,
-            'content'           => 'required',
-            'categories'        => 'required',
-            'tags'              => 'required',
-        ]);
-
-        return $validation;
-    }
-
-    /**
      * validate message for validate blog.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -144,7 +144,7 @@ class BlogsController extends APIController
     {
         return [
             'name.required' => 'Please insert Blog Title',
-            'name.max'      => 'Blog Title may not be greater than 191 characters.',
+            'name.max' => 'Blog Title may not be greater than 191 characters.',
         ];
     }
 }

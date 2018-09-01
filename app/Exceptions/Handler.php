@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Exception               $exception
+     * @param \Exception $exception
      *
      * @return \Illuminate\Http\Response
      */
@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
     {
         //dd($exception);
         if (strpos($request->url(), '/api/') !== false) {
-            \Log::debug('API Request Exception - '.$request->url().' - '.$exception->getMessage().(!empty($request->all()) ? ' - '.json_encode($request->except(['password'])) : ''));
+            \Log::debug('API Request Exception - ' . $request->url() . ' - ' . $exception->getMessage() . (!empty($request->all()) ? ' - ' . json_encode($request->except(['password'])) : ''));
 
             if ($exception instanceof AuthorizationException) {
                 return $this->setStatusCode(403)->respondWithError($exception->getMessage());
@@ -78,7 +78,7 @@ class Handler extends ExceptionHandler
             }
 
             if ($exception instanceof ValidationException) {
-                \Log::debug('API Validation Exception - '.json_encode($exception->validator->messages()));
+                \Log::debug('API Validation Exception - ' . json_encode($exception->validator->messages()));
 
                 return $this->setStatusCode(422)->respondWithError($exception->validator->messages());
             }
@@ -119,33 +119,6 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Convert an authentication exception into an unauthenticated response.
-     *
-     * @param \Illuminate\Http\Request                 $request
-     * @param \Illuminate\Auth\AuthenticationException $exception
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function unauthenticated($request, AuthenticationException $exception)
-    {
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
-        }
-
-        return redirect()->guest(route('frontend.auth.login'));
-    }
-
-    /**
-     * get the status code.
-     *
-     * @return statuscode
-     */
-    public function getStatusCode()
-    {
-        return $this->statusCode;
-    }
-
-    /**
      * set the status code.
      *
      * @param [type] $statusCode [description]
@@ -160,6 +133,23 @@ class Handler extends ExceptionHandler
     }
 
     /**
+     * Convert an authentication exception into an unauthenticated response.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Auth\AuthenticationException $exception
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+
+        return redirect()->guest(route('frontend.auth.login'));
+    }
+
+    /**
      * respond with error.
      *
      * @param $message
@@ -169,11 +159,11 @@ class Handler extends ExceptionHandler
     protected function respondWithError($message)
     {
         return $this->respond([
-                'error' => [
-                    'message'     => $message,
-                    'status_code' => $this->getStatusCode(),
-                ],
-            ]);
+            'error' => [
+                'message' => $message,
+                'status_code' => $this->getStatusCode(),
+            ],
+        ]);
     }
 
     /**
@@ -187,5 +177,15 @@ class Handler extends ExceptionHandler
     public function respond($data, $headers = [])
     {
         return response()->json($data, $this->getStatusCode(), $headers);
+    }
+
+    /**
+     * get the status code.
+     *
+     * @return statuscode
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
     }
 }

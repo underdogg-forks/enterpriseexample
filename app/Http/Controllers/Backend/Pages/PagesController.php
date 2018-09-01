@@ -59,11 +59,12 @@ class PagesController extends Controller
     {
         $this->pages->create($request->except(['_token']));
 
-        return new RedirectResponse(route('admin.pages.index'), ['flash_success' => trans('alerts.backend.pages.created')]);
+        return new RedirectResponse(route('admin.pages.index'),
+            ['flash_success' => trans('alerts.backend.pages.created')]);
     }
 
     /**
-     * @param \App\Models\Page\Page                            $page
+     * @param \App\Models\Page\Page $page
      * @param \App\Http\Requests\Backend\Pages\EditPageRequest $request
      *
      * @return \App\Http\Responses\Backend\Page\EditResponse
@@ -74,7 +75,7 @@ class PagesController extends Controller
     }
 
     /**
-     * @param \App\Models\Page\Page                              $page
+     * @param \App\Models\Page\Page $page
      * @param \App\Http\Requests\Backend\Pages\UpdatePageRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -83,11 +84,12 @@ class PagesController extends Controller
     {
         $this->pages->update($page, $request->except(['_method', '_token']));
 
-        return new RedirectResponse(route('admin.pages.index'), ['flash_success' => trans('alerts.backend.pages.updated')]);
+        return new RedirectResponse(route('admin.pages.index'),
+            ['flash_success' => trans('alerts.backend.pages.updated')]);
     }
 
     /**
-     * @param \App\Models\Page\Page                              $page
+     * @param \App\Models\Page\Page $page
      * @param \App\Http\Requests\Backend\Pages\DeletePageRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -96,6 +98,7 @@ class PagesController extends Controller
     {
         $this->pages->delete($page);
 
-        return new RedirectResponse(route('admin.pages.index'), ['flash_success' => trans('alerts.backend.pages.deleted')]);
+        return new RedirectResponse(route('admin.pages.index'),
+            ['flash_success' => trans('alerts.backend.pages.deleted')]);
     }
 }

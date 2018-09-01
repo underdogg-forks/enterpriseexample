@@ -28,7 +28,7 @@ class SocialLoginController extends Controller
     /**
      * SocialLoginController constructor.
      *
-     * @param UserRepository  $user
+     * @param UserRepository $user
      * @param SocialiteHelper $helper
      */
     public function __construct(UserRepository $user, SocialiteHelper $helper)
@@ -52,7 +52,8 @@ class SocialLoginController extends Controller
 
         // If the provider is not an acceptable third party than kick back
         if (!in_array($provider, $this->helper->getAcceptedProviders())) {
-            return redirect()->route('frontend.index')->withFlashDanger(trans('auth.socialite.unacceptable', ['provider' => $provider]));
+            return redirect()->route('frontend.index')->withFlashDanger(trans('auth.socialite.unacceptable',
+                ['provider' => $provider]));
         }
 
         /*

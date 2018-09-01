@@ -37,28 +37,6 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param $email
-     *
-     * @return bool
-     */
-    public function findByEmail($email)
-    {
-        return $this->query()->where('email', $email)->first();
-    }
-
-    /**
-     * @param $token
-     *
-     * @throws GeneralException
-     *
-     * @return mixed
-     */
-    public function findByToken($token)
-    {
-        return $this->query()->where('confirmation_code', $token)->first();
-    }
-
-    /**
      * @param $token
      *
      * @throws GeneralException
@@ -79,10 +57,74 @@ class UserRepository extends BaseRepository
     }
 
     /**
+     * @param $data
+     * @param $provider
+     *
+     * @throws GeneralException
+     *
+     * @return UserRepository|bool
+     */
+    public function findOrCreateSocial($data, $provider)
+    {
+        // User email may not provided.
+        $user_email = $data->email ?: "{$data->id}@{$provider}.com";
+
+        // Check to see if there is a user with this email first.
+        $user = $this->findByEmail($user_email);
+
+        /*
+         * If the user does not exist create them
+         * The true flag indicate that it is a social account
+         * Which triggers the script to use some default values in the create method
+         */
+        if (!$user) {
+            // Registration is not enabled
+            if (!config('access.users.registration')) {
+                throw new GeneralException(trans('exceptions.frontend.auth.registration_disabled'));
+            }
+
+            $user = $this->create([
+                'name' => $data->name,
+                'email' => $user_email,
+            ], true);
+        }
+
+        // See if the user has logged in with this social account before
+        if (!$user->hasProvider($provider)) {
+            // Gather the provider data for saving and associate it with the user
+            $user->providers()->save(new SocialLogin([
+                'provider' => $provider,
+                'provider_id' => $data->id,
+                'token' => $data->token,
+                'avatar' => $data->avatar,
+            ]));
+        } else {
+            // Update the users information, token and avatar can be updated.
+            $user->providers()->update([
+                'token' => $data->token,
+                'avatar' => $data->avatar,
+            ]);
+        }
+
+        // Return the user object
+        return $user;
+    }
+
+    /**
+     * @param $email
+     *
+     * @return bool
+     */
+    public function findByEmail($email)
+    {
+        return $this->query()->where('email', $email)->first();
+    }
+
+    /**
      * Create User.
      *
      * @param array $data
-     * @param bool  $provider
+     * @param bool $provider
      *
      * @return static
      */
@@ -150,60 +192,6 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param $data
-     * @param $provider
-     *
-     * @throws GeneralException
-     *
-     * @return UserRepository|bool
-     */
-    public function findOrCreateSocial($data, $provider)
-    {
-        // User email may not provided.
-        $user_email = $data->email ?: "{$data->id}@{$provider}.com";
-
-        // Check to see if there is a user with this email first.
-        $user = $this->findByEmail($user_email);
-
-        /*
-         * If the user does not exist create them
-         * The true flag indicate that it is a social account
-         * Which triggers the script to use some default values in the create method
-         */
-        if (!$user) {
-            // Registration is not enabled
-            if (!config('access.users.registration')) {
-                throw new GeneralException(trans('exceptions.frontend.auth.registration_disabled'));
-            }
-
-            $user = $this->create([
-                'name'  => $data->name,
-                'email' => $user_email,
-            ], true);
-        }
-
-        // See if the user has logged in with this social account before
-        if (!$user->hasProvider($provider)) {
-            // Gather the provider data for saving and associate it with the user
-            $user->providers()->save(new SocialLogin([
-                'provider'    => $provider,
-                'provider_id' => $data->id,
-                'token'       => $data->token,
-                'avatar'      => $data->avatar,
-            ]));
-        } else {
-            // Update the users information, token and avatar can be updated.
-            $user->providers()->update([
-                'token'  => $data->token,
-                'avatar' => $data->avatar,
-            ]);
-        }
-
-        // Return the user object
-        return $user;
-    }
-
-    /**
      * @param $token
      *
      * @throws GeneralException
@@ -227,6 +215,18 @@ class UserRepository extends BaseRepository
         }
 
         throw new GeneralException(trans('exceptions.frontend.auth.confirmation.mismatch'));
+    }
+
+    /**
+     * @param $token
+     *
+     * @throws GeneralException
+     *
+     * @return mixed
+     */
+    public function findByToken($token)
+    {
+        return $this->query()->where('confirmation_code', $token)->first();
     }
 
     /**
@@ -262,7 +262,7 @@ class UserRepository extends BaseRepository
                 $user->notify(new UserNeedsConfirmation($user->confirmation_code));
 
                 return [
-                    'success'       => $updated,
+                    'success' => $updated,
                     'email_changed' => true,
                 ];
             }
@@ -289,9 +289,9 @@ class UserRepository extends BaseRepository
                 $input['email'] = $user->email;
                 // Send email to the user
                 $options = [
-                        'data'                => $input,
-                        'email_template_type' => 4,
-                    ];
+                    'data' => $input,
+                    'email_template_type' => 4,
+                ];
                 createNotification('', $user->id, 2, $options);
 
                 return true;

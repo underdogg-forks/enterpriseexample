@@ -1,8 +1,8 @@
 <?php
 
 Route::group([
-    'prefix'    => 'search',
-    'as'        => 'search.',
+    'prefix' => 'search',
+    'as' => 'search.',
     'namespace' => 'Search',
 ], function () {
 

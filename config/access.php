@@ -83,7 +83,7 @@ return [
     /*
      * Menus table used to store Menu and menu items
      */
-    'menus_table'      => 'menus',
+    'menus_table' => 'menus',
     'menu_items_table' => 'menu_items',
 
     /*

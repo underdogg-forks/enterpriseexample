@@ -9,9 +9,9 @@
 @endsection
 
 @section('content')
-	{{ Form::model($logged_in_user, ['route' => 'admin.profile.update', 'class' => 'form-horizontal', 'method' => 'PATCH']) }}
+    {{ Form::model($logged_in_user, ['route' => 'admin.profile.update', 'class' => 'form-horizontal', 'method' => 'PATCH']) }}
 
-     <div class="box box-info">
+    <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">{{ trans('labels.backend.access.users.edit-profile') }}</h3>
         </div>
@@ -37,13 +37,13 @@
             </div>
         </div>
     </div>
-{{ Form::close() }}
+    {{ Form::close() }}
 @endsection
 @section('after-scripts')
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        Backend.Profile.init();
-    });
-</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Backend.Profile.init();
+        });
+    </script>
 @endsection

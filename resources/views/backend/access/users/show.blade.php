@@ -26,11 +26,13 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
-                        <a href="#overview" aria-controls="overview" role="tab" data-toggle="tab">{{ trans('labels.backend.access.users.tabs.titles.overview') }}</a>
+                        <a href="#overview" aria-controls="overview" role="tab"
+                           data-toggle="tab">{{ trans('labels.backend.access.users.tabs.titles.overview') }}</a>
                     </li>
 
                     <li role="presentation">
-                        <a href="#history" aria-controls="history" role="tab" data-toggle="tab">{{ trans('labels.backend.access.users.tabs.titles.history') }}</a>
+                        <a href="#history" aria-controls="history" role="tab"
+                           data-toggle="tab">{{ trans('labels.backend.access.users.tabs.titles.history') }}</a>
                     </li>
                 </ul>
 

@@ -25,9 +25,9 @@ class RoleTableSeeder extends Seeder
 
         $roles = [
             [
-                'name'       => 'Administrator',
-                'all'        => true,
-                'sort'       => 1,
+                'name' => 'Administrator',
+                'all' => true,
+                'sort' => 1,
                 'created_by' => 1,
                 'updated_by' => null,
                 'created_at' => Carbon::now(),
@@ -35,9 +35,9 @@ class RoleTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'name'       => 'Executive',
-                'all'        => false,
-                'sort'       => 2,
+                'name' => 'Executive',
+                'all' => false,
+                'sort' => 2,
                 'created_by' => 1,
                 'updated_by' => null,
                 'created_at' => Carbon::now(),
@@ -45,9 +45,9 @@ class RoleTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'name'       => 'User',
-                'all'        => false,
-                'sort'       => 3,
+                'name' => 'User',
+                'all' => false,
+                'sort' => 3,
                 'created_by' => 1,
                 'updated_by' => null,
                 'created_at' => Carbon::now(),

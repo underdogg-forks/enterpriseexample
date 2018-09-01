@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Access\User\User;
 use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -20,8 +19,8 @@ class AuthController extends APIController
     public function login(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'email'     => 'required|email',
-            'password'  => 'required|min:4',
+            'email' => 'required|email',
+            'password' => 'required|min:4',
         ]);
 
         if ($validation->fails()) {
@@ -39,8 +38,8 @@ class AuthController extends APIController
         }
 
         return $this->respond([
-            'message'   => trans('api.messages.login.success'),
-            'token'     => $token,
+            'message' => trans('api.messages.login.success'),
+            'token' => $token,
         ]);
     }
 
@@ -62,7 +61,7 @@ class AuthController extends APIController
         }
 
         return $this->respond([
-            'message'   => trans('api.messages.logout.success'),
+            'message' => trans('api.messages.logout.success'),
         ]);
     }
 
@@ -87,7 +86,7 @@ class AuthController extends APIController
 
         return $this->respond([
             'status' => trans('api.messages.refresh.status'),
-            'token'  => $refreshedToken,
+            'token' => $refreshedToken,
         ]);
     }
 }

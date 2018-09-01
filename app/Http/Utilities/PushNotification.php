@@ -12,10 +12,10 @@ class PushNotification
     /**
      * PushNotification.
      *
-     * @param array  $msg
+     * @param array $msg
      * @param string $type
-     * @param array  $devicetoken
-     * @param array  $params
+     * @param array $devicetoken
+     * @param array $params
      * @param string $user_id
      *
      * @return bool
@@ -49,6 +49,50 @@ class PushNotification
     }
 
     /**
+     * PushNotification for IOS.
+     *
+     * @param array $devicetoken
+     * @param array $msg
+     * @param array $params
+     * @param string $user_id
+     *
+     * @return bool
+     */
+    public function _pushtoios($devicetoken, $message)
+    {
+        $passphrase = 'apple'; //pwd: Infowelt@123
+        $ctx = stream_context_create();
+        //stream_context_set_option($ctx, 'ssl', 'local_cert', TMP . 'pem/apns_baseproject_dev.pem');
+        stream_context_set_option($ctx, 'ssl', 'local_cert', public_path() . '/pem/Push_Infowelt.pem');
+        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+        $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60,
+            STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT, $ctx);
+
+        //$fp = stream_socket_client('ssl://gateway.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT, $ctx);
+
+        if (!$fp) {
+            exit("Failed to connect amarnew: $err $errstr" . PHP_EOL);
+        }
+
+        $body['aps'] = [
+            'badge' => +1,
+            'alert' => $message,
+            'sound' => 'default',
+        ];
+        $payload = json_encode($body);
+        $msg = chr(0) . pack('n', 32) . pack('H*', $devicetoken) . pack('n', strlen($payload)) . $payload;
+
+        $result = fwrite($fp, $msg, strlen($msg));
+
+        if (!$result) {
+            return false;
+        } else {
+            return true;
+        }
+        fclose($fp);
+    }
+
+    /**
      * PushNotification for android.
      *
      * @param array $devicetoken
@@ -64,11 +108,11 @@ class PushNotification
         }
         $fields = [
             'registration_ids' => $registrationIds,
-            'data'             => $msg,
+            'data' => $msg,
         ];
 
         $headers = [
-            'Authorization: key='.config('access.AccessKey'),
+            'Authorization: key=' . config('access.AccessKey'),
             'Content-Type: application/json',
         ];
 
@@ -83,48 +127,5 @@ class PushNotification
         curl_close($ch);
 
         return true;
-    }
-
-    /**
-     * PushNotification for IOS.
-     *
-     * @param array  $devicetoken
-     * @param array  $msg
-     * @param array  $params
-     * @param string $user_id
-     *
-     * @return bool
-     */
-    public function _pushtoios($devicetoken, $message)
-    {
-        $passphrase = 'apple'; //pwd: Infowelt@123
-        $ctx = stream_context_create();
-        //stream_context_set_option($ctx, 'ssl', 'local_cert', TMP . 'pem/apns_baseproject_dev.pem');
-        stream_context_set_option($ctx, 'ssl', 'local_cert', public_path().'/pem/Push_Infowelt.pem');
-        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-        $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT, $ctx);
-
-        //$fp = stream_socket_client('ssl://gateway.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT, $ctx);
-
-        if (!$fp) {
-            exit("Failed to connect amarnew: $err $errstr".PHP_EOL);
-        }
-
-        $body['aps'] = [
-            'badge' => +1,
-            'alert' => $message,
-            'sound' => 'default',
-        ];
-        $payload = json_encode($body);
-        $msg = chr(0).pack('n', 32).pack('H*', $devicetoken).pack('n', strlen($payload)).$payload;
-
-        $result = fwrite($fp, $msg, strlen($msg));
-
-        if (!$result) {
-            return false;
-        } else {
-            return true;
-        }
-        fclose($fp);
     }
 }

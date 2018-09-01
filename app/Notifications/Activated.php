@@ -46,11 +46,11 @@ class Activated extends Notification
         $url = url('/');
 
         return (new MailMessage())
-                    ->greeting('Hello!')
-                    ->line('Your account has been activated.')
-                    ->line('Click on the below link to go to our application!')
-                    ->action('Proceed', $url)
-                    ->line('Thank you for using our application!');
+            ->greeting('Hello!')
+            ->line('Your account has been activated.')
+            ->line('Click on the below link to go to our application!')
+            ->action('Proceed', $url)
+            ->line('Thank you for using our application!');
     }
 
     /**

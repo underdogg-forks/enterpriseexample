@@ -48,7 +48,7 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param int  $status
+     * @param int $status
      * @param bool $trashed
      *
      * @return mixed
@@ -63,15 +63,15 @@ class UserRepository extends BaseRepository
             ->leftJoin('role_user', 'role_user.user_id', '=', 'users.id')
             ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
             ->select([
-                config('access.users_table').'.id',
-                config('access.users_table').'.first_name',
-                config('access.users_table').'.last_name',
-                config('access.users_table').'.email',
-                config('access.users_table').'.status',
-                config('access.users_table').'.confirmed',
-                config('access.users_table').'.created_at',
-                config('access.users_table').'.updated_at',
-                config('access.users_table').'.deleted_at',
+                config('access.users_table') . '.id',
+                config('access.users_table') . '.first_name',
+                config('access.users_table') . '.last_name',
+                config('access.users_table') . '.email',
+                config('access.users_table') . '.status',
+                config('access.users_table') . '.confirmed',
+                config('access.users_table') . '.created_at',
+                config('access.users_table') . '.updated_at',
+                config('access.users_table') . '.deleted_at',
                 DB::raw('GROUP_CONCAT(roles.name) as roles'),
             ])
             ->groupBy('users.id');
@@ -125,6 +125,27 @@ class UserRepository extends BaseRepository
     }
 
     /**
+     * @param  $input
+     *
+     * @return mixed
+     */
+    protected function createUserStub($input)
+    {
+        $user = self::MODEL;
+        $user = new $user();
+        $user->first_name = $input['first_name'];
+        $user->last_name = $input['last_name'];
+        $user->email = $input['email'];
+        $user->password = bcrypt($input['password']);
+        $user->status = isset($input['status']) ? 1 : 0;
+        $user->confirmation_code = md5(uniqid(mt_rand(), true));
+        $user->confirmed = isset($input['confirmed']) ? 1 : 0;
+        $user->created_by = access()->user()->id;
+
+        return $user;
+    }
+
+    /**
      * @param Model $user
      * @param $request
      *
@@ -158,6 +179,63 @@ class UserRepository extends BaseRepository
 
             throw new GeneralException(trans('exceptions.backend.access.users.update_error'));
         });
+    }
+
+    /**
+     * @param  $input
+     * @param  $user
+     *
+     * @throws GeneralException
+     */
+    protected function checkUserByEmail($input, $user)
+    {
+        //Figure out if email is not the same
+        if ($user->email != $input['email']) {
+            //Check to see if email exists
+            if ($this->query()->where('email', '=', $input['email'])->first()) {
+                throw new GeneralException(trans('exceptions.backend.access.users.email_error'));
+            }
+        }
+    }
+
+    /**
+     * @param  $roles
+     *
+     * @throws GeneralException
+     */
+    protected function checkUserRolesCount($roles)
+    {
+        //User Updated, Update Roles
+        //Validate that there's at least one role chosen
+        if (count($roles) == 0) {
+            throw new GeneralException(trans('exceptions.backend.access.users.role_needed'));
+        }
+    }
+
+    /**
+     * Flush roles out, then add array of new ones.
+     *
+     * @param $roles
+     * @param $user
+     */
+    protected function flushRoles($roles, $user)
+    {
+        //Flush roles out, then add array of new ones
+        $user->detachRoles($user->roles);
+        $user->attachRoles($roles);
+    }
+
+    /**
+     * Flush Permissions out, then add array of new ones.
+     *
+     * @param $permissions
+     * @param $user
+     */
+    protected function flushPermissions($permissions, $user)
+    {
+        //Flush permission out, then add array of new ones
+        $user->detachPermissions($user->permissions);
+        $user->attachPermissions($permissions);
     }
 
     /**
@@ -304,11 +382,11 @@ class UserRepository extends BaseRepository
         switch ($status) {
             case 0:
                 event(new UserDeactivated($user));
-            break;
+                break;
 
             case 1:
                 event(new UserReactivated($user));
-            break;
+                break;
         }
 
         if ($user->save()) {
@@ -316,84 +394,6 @@ class UserRepository extends BaseRepository
         }
 
         throw new GeneralException(trans('exceptions.backend.access.users.mark_error'));
-    }
-
-    /**
-     * @param  $input
-     * @param  $user
-     *
-     * @throws GeneralException
-     */
-    protected function checkUserByEmail($input, $user)
-    {
-        //Figure out if email is not the same
-        if ($user->email != $input['email']) {
-            //Check to see if email exists
-            if ($this->query()->where('email', '=', $input['email'])->first()) {
-                throw new GeneralException(trans('exceptions.backend.access.users.email_error'));
-            }
-        }
-    }
-
-    /**
-     * Flush roles out, then add array of new ones.
-     *
-     * @param $roles
-     * @param $user
-     */
-    protected function flushRoles($roles, $user)
-    {
-        //Flush roles out, then add array of new ones
-        $user->detachRoles($user->roles);
-        $user->attachRoles($roles);
-    }
-
-    /**
-     * Flush Permissions out, then add array of new ones.
-     *
-     * @param $permissions
-     * @param $user
-     */
-    protected function flushPermissions($permissions, $user)
-    {
-        //Flush permission out, then add array of new ones
-        $user->detachPermissions($user->permissions);
-        $user->attachPermissions($permissions);
-    }
-
-    /**
-     * @param  $roles
-     *
-     * @throws GeneralException
-     */
-    protected function checkUserRolesCount($roles)
-    {
-        //User Updated, Update Roles
-        //Validate that there's at least one role chosen
-        if (count($roles) == 0) {
-            throw new GeneralException(trans('exceptions.backend.access.users.role_needed'));
-        }
-    }
-
-    /**
-     * @param  $input
-     *
-     * @return mixed
-     */
-    protected function createUserStub($input)
-    {
-        $user = self::MODEL;
-        $user = new $user();
-        $user->first_name = $input['first_name'];
-        $user->last_name = $input['last_name'];
-        $user->email = $input['email'];
-        $user->password = bcrypt($input['password']);
-        $user->status = isset($input['status']) ? 1 : 0;
-        $user->confirmation_code = md5(uniqid(mt_rand(), true));
-        $user->confirmed = isset($input['confirmed']) ? 1 : 0;
-        $user->created_by = access()->user()->id;
-
-        return $user;
     }
 
     /**
@@ -409,7 +409,7 @@ class UserRepository extends BaseRepository
         }
 
         return $this->query()->whereHas('roles.permissions', function ($query) use ($permissions, $by) {
-            $query->whereIn('permissions.'.$by, $permissions);
+            $query->whereIn('permissions.' . $by, $permissions);
         })->get();
     }
 
@@ -426,7 +426,7 @@ class UserRepository extends BaseRepository
         }
 
         return $this->query()->whereHas('roles', function ($query) use ($roles, $by) {
-            $query->whereIn('roles.'.$by, $roles);
+            $query->whereIn('roles.' . $by, $roles);
         })->get();
     }
 }

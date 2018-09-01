@@ -59,11 +59,12 @@ class BlogCategoriesController extends Controller
     {
         $this->blogcategory->create($request->all());
 
-        return new RedirectResponse(route('admin.blogCategories.index'), ['flash_success' => trans('alerts.backend.blogcategories.created')]);
+        return new RedirectResponse(route('admin.blogCategories.index'),
+            ['flash_success' => trans('alerts.backend.blogcategories.created')]);
     }
 
     /**
-     * @param \App\Models\BlogCategories\BlogCategory                             $blogCategory
+     * @param \App\Models\BlogCategories\BlogCategory $blogCategory
      * @param \App\Http\Requests\Backend\BlogCategories\EditBlogCategoriesRequest $request
      *
      * @return \App\Http\Responses\Backend\BlogCategory\EditResponse
@@ -74,7 +75,7 @@ class BlogCategoriesController extends Controller
     }
 
     /**
-     * @param \App\Models\BlogCategories\BlogCategory                               $blogCategory
+     * @param \App\Models\BlogCategories\BlogCategory $blogCategory
      * @param \App\Http\Requests\Backend\BlogCategories\UpdateBlogCategoriesRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -83,11 +84,12 @@ class BlogCategoriesController extends Controller
     {
         $this->blogcategory->update($blogCategory, $request->all());
 
-        return new RedirectResponse(route('admin.blogCategories.index'), ['flash_success' => trans('alerts.backend.blogcategories.updated')]);
+        return new RedirectResponse(route('admin.blogCategories.index'),
+            ['flash_success' => trans('alerts.backend.blogcategories.updated')]);
     }
 
     /**
-     * @param \App\Models\BlogCategories\BlogCategory                               $blogCategory
+     * @param \App\Models\BlogCategories\BlogCategory $blogCategory
      * @param \App\Http\Requests\Backend\BlogCategories\DeleteBlogCategoriesRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -96,6 +98,7 @@ class BlogCategoriesController extends Controller
     {
         $this->blogcategory->delete($blogCategory);
 
-        return new RedirectResponse(route('admin.blogCategories.index'), ['flash_success' => trans('alerts.backend.blogcategories.deleted')]);
+        return new RedirectResponse(route('admin.blogCategories.index'),
+            ['flash_success' => trans('alerts.backend.blogcategories.deleted')]);
     }
 }

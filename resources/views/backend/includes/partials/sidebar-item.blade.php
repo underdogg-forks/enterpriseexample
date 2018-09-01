@@ -7,8 +7,9 @@
         @endif
     </a>
     @if (!empty($item->children))
-    <ul class="treeview-menu {{ active_class(isActiveMenuItem($item), 'menu-open') }}" style="display: none; {{ active_class(isActiveMenuItem($item), 'display: block;') }}">
-        {{ renderMenuItems($item->children) }}
-    </ul>
+        <ul class="treeview-menu {{ active_class(isActiveMenuItem($item), 'menu-open') }}"
+            style="display: none; {{ active_class(isActiveMenuItem($item), 'display: block;') }}">
+            {{ renderMenuItems($item->children) }}
+        </ul>
     @endif
 </li>

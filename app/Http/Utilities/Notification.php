@@ -15,13 +15,14 @@ namespace App\Http\Utilities;
  *
  * Created on 17-07-2013
  */
+
 abstract class Notification
 {
+    protected static $_url = null;
     protected $_message = null;
     protected $_devices = null;
     protected $_response = null;
     protected $_body = null;
-    protected static $_url = null;
 
     /*
     * Constructer
@@ -43,8 +44,18 @@ abstract class Notification
     * @return void
     *
     */
-    protected function _getAuthHeaders()
+
+    public function setOptions(array $options)
     {
+        foreach ($options as $optionKey => $option) {
+            $methodName = 'set' . ucfirst($optionKey);
+            $propertyName = '_' . $optionKey;
+            if (method_exists($methodName, $this)) {
+                $this->$methodName($option);
+            } elseif (property_exists($propertyName, $this)) {
+                $this->{$propertyName} = $option;
+            }
+        }
     }
 
     /*
@@ -57,7 +68,10 @@ abstract class Notification
     *
     */
 
-    abstract protected function _send($deviceId, $message, $sendOptions = []);
+    public function send($deviceIds, $message, $sendOptions)
+    {
+        return $this->_send($deviceIds, $message, $sendOptions);
+    }
 
     /*
     * Send Message to devices (if user not create any function in any particuler class that time this function call)
@@ -69,10 +83,8 @@ abstract class Notification
     *
     *
     */
-    public function send($deviceIds, $message, $sendOptions)
-    {
-        return $this->_send($deviceIds, $message, $sendOptions);
-    }
+
+    abstract protected function _send($deviceId, $message, $sendOptions = []);
 
     /*
     * _prepareBody is a function for set body of push notification
@@ -84,13 +96,21 @@ abstract class Notification
         *
     */
 
-    protected function _prepareBody($message, $deviceIds)
-    {
-    }
-
     public function getResponse()
     {
         return $this->_response;
+    }
+
+    public function raiseerror($errorCode)
+    {
+        $codeValue = $this->getErrorMessages();
+        if (!isset($codeValue[$errorCode])) {
+            $errorException = 'Erro code ' . $errorCode;
+        } else {
+            $errorException = $codeValue[$errorCode];
+        }
+
+        //throw new Exception($errorException);
     }
 
     /*
@@ -99,17 +119,10 @@ abstract class Notification
     * @param array $options if other condition or data needed than option parameter is usefull
     *
     */
-    public function setOptions(array $options)
+
+    public function getErrorMessages()
     {
-        foreach ($options as $optionKey => $option) {
-            $methodName = 'set'.ucfirst($optionKey);
-            $propertyName = '_'.$optionKey;
-            if (method_exists($methodName, $this)) {
-                $this->$methodName($option);
-            } elseif (property_exists($propertyName, $this)) {
-                $this->{$propertyName} = $option;
-            }
-        }
+        [];
     }
 
     /*
@@ -123,16 +136,8 @@ abstract class Notification
     *
     */
 
-    public function raiseerror($errorCode)
+    protected function _getAuthHeaders()
     {
-        $codeValue = $this->getErrorMessages();
-        if (!isset($codeValue[$errorCode])) {
-            $errorException = 'Erro code '.$errorCode;
-        } else {
-            $errorException = $codeValue[$errorCode];
-        }
-
-        //throw new Exception($errorException);
     }
 
     /*
@@ -141,8 +146,7 @@ abstract class Notification
     * @return array
     */
 
-    public function getErrorMessages()
+    protected function _prepareBody($message, $deviceIds)
     {
-        [];
     }
 }

@@ -26,7 +26,7 @@ class SettingsLogoController extends Controller
      * Remove logo or favicon icon.
      *
      * @param \App\Models\Settings\Setting $setting
-     * @param \Illuminate\Http\Request     $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return mixed
      */

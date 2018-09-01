@@ -39,7 +39,7 @@ return [
             'Authorization',
         ],
 
-         'expose_headers' => [
+        'expose_headers' => [
             'Cache-Control',
             'Content-Language',
             'Content-Type',
@@ -50,7 +50,7 @@ return [
 
         'forbidden_response' => [
             'message' => 'Forbidden (cors).',
-            'status'  => 403,
+            'status' => 403,
         ],
 
         /*

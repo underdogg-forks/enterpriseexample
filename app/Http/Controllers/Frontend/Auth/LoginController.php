@@ -34,20 +34,6 @@ class LoginController extends Controller
     }
 
     /**
-     * Where to redirect users after login.
-     *
-     * @return string
-     */
-    public function redirectPath()
-    {
-        if (access()->allow('view-backend')) {
-            return route('admin.dashboard');
-        }
-
-        return route('frontend.user.dashboard');
-    }
-
-    /**
      * Show the application's login form.
      *
      * @return \Illuminate\Http\Response
@@ -56,41 +42,6 @@ class LoginController extends Controller
     {
         return view('frontend.auth.login')
             ->withSocialiteLinks((new Socialite())->getSocialLinks());
-    }
-
-    /**
-     * @param Request $request
-     * @param $user
-     *
-     * @throws GeneralException
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function authenticated(Request $request, $user)
-    {
-        /*
-         * Check to see if the users account is confirmed and active
-         */
-        if (!$user->isConfirmed()) {
-            access()->logout();
-
-            throw new GeneralException(trans('exceptions.frontend.auth.confirmation.resend', ['user_id' => $user->id]));
-        } elseif (!$user->isActive()) {
-            access()->logout();
-
-            throw new GeneralException(trans('exceptions.frontend.auth.deactivated'));
-        }
-
-        event(new UserLoggedIn($user));
-        /*
-        // Push notification implementation
-
-        $deviceToken    =   "3694d3a6b7258dd6653c6ec0d8488e5fc38577a164af4365b12e5fc0106cc705";
-        $message        =   "Testing from php department";
-        $sendOption     =   array('Type' => 'Quote');
-        $this->notification->_pushNotification($message, 'ios', $deviceToken);
-        */
-        return redirect()->intended($this->redirectPath());
     }
 
     /**
@@ -151,7 +102,7 @@ class LoginController extends Controller
             app()->make(Auth::class)->flushTempSession();
 
             //Re-login admin
-            access()->loginUsingId((int) $admin_id);
+            access()->loginUsingId((int)$admin_id);
 
             //Redirect to backend user page
             return redirect()->route('admin.access.user.index');
@@ -163,5 +114,54 @@ class LoginController extends Controller
 
             return redirect()->route('frontend.auth.login');
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param $user
+     *
+     * @throws GeneralException
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        /*
+         * Check to see if the users account is confirmed and active
+         */
+        if (!$user->isConfirmed()) {
+            access()->logout();
+
+            throw new GeneralException(trans('exceptions.frontend.auth.confirmation.resend', ['user_id' => $user->id]));
+        } elseif (!$user->isActive()) {
+            access()->logout();
+
+            throw new GeneralException(trans('exceptions.frontend.auth.deactivated'));
+        }
+
+        event(new UserLoggedIn($user));
+        /*
+        // Push notification implementation
+
+        $deviceToken    =   "3694d3a6b7258dd6653c6ec0d8488e5fc38577a164af4365b12e5fc0106cc705";
+        $message        =   "Testing from php department";
+        $sendOption     =   array('Type' => 'Quote');
+        $this->notification->_pushNotification($message, 'ios', $deviceToken);
+        */
+        return redirect()->intended($this->redirectPath());
+    }
+
+    /**
+     * Where to redirect users after login.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        if (access()->allow('view-backend')) {
+            return route('admin.dashboard');
+        }
+
+        return route('frontend.user.dashboard');
     }
 }

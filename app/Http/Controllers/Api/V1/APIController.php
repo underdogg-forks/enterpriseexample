@@ -19,6 +19,41 @@ class APIController extends Controller
     protected $statusCode = 200;
 
     /**
+     * respond with pagincation.
+     *
+     * @param Paginator $items
+     * @param array $data
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function respondWithPagination($items, $data)
+    {
+        $data = array_merge($data, [
+            'paginator' => [
+                'total_count' => $items->total(),
+                'total_pages' => ceil($items->total() / $items->perPage()),
+                'current_page' => $items->currentPage(),
+                'limit' => $items->perPage(),
+            ],
+        ]);
+
+        return $this->respond($data);
+    }
+
+    /**
+     * Respond.
+     *
+     * @param array $data
+     * @param array $headers
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function respond($data, $headers = [])
+    {
+        return response()->json($data, $this->getStatusCode(), $headers);
+    }
+
+    /**
      * get the status code.
      *
      * @return statuscode
@@ -40,41 +75,6 @@ class APIController extends Controller
         $this->statusCode = $statusCode;
 
         return $this;
-    }
-
-    /**
-     * Respond.
-     *
-     * @param array $data
-     * @param array $headers
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function respond($data, $headers = [])
-    {
-        return response()->json($data, $this->getStatusCode(), $headers);
-    }
-
-    /**
-     * respond with pagincation.
-     *
-     * @param Paginator $items
-     * @param array     $data
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function respondWithPagination($items, $data)
-    {
-        $data = array_merge($data, [
-            'paginator' => [
-                'total_count'  => $items->total(),
-                'total_pages'  => ceil($items->total() / $items->perPage()),
-                'current_page' => $items->currentPage(),
-                'limit'        => $items->perPage(),
-             ],
-        ]);
-
-        return $this->respond($data);
     }
 
     /**
@@ -113,11 +113,11 @@ class APIController extends Controller
     public function respondWithError($message)
     {
         return $this->respond([
-                'error' => [
-                    'message'     => $message,
-                    'status_code' => $this->getStatusCode(),
-                ],
-            ]);
+            'error' => [
+                'message' => $message,
+                'status_code' => $this->getStatusCode(),
+            ],
+        ]);
     }
 
     /**
@@ -142,6 +142,19 @@ class APIController extends Controller
     public function respondInternalError($message = 'Internal Error')
     {
         return $this->setStatusCode(500)->respondWithError($message);
+    }
+
+    /**Note this function is same as the below function but instead of responding with error below function returns error json
+     * Throw Validation.
+     *
+     * @param string $message
+     *
+     * @return mix
+     */
+    public function throwValidation($message)
+    {
+        return $this->setStatusCode(422)
+            ->respondWithError($message);
     }
 
     /**
@@ -176,18 +189,5 @@ class APIController extends Controller
     protected function respondWithNoContent()
     {
         return $this->setStatusCode(204)->respond(null);
-    }
-
-    /**Note this function is same as the below function but instead of responding with error below function returns error json
-     * Throw Validation.
-     *
-     * @param string $message
-     *
-     * @return mix
-     */
-    public function throwValidation($message)
-    {
-        return $this->setStatusCode(422)
-            ->respondWithError($message);
     }
 }

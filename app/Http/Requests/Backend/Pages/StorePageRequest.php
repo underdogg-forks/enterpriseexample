@@ -27,7 +27,7 @@ class StorePageRequest extends Request
     public function rules()
     {
         return [
-            'title'       => 'required|max:191',
+            'title' => 'required|max:191',
             'description' => 'required',
         ];
     }

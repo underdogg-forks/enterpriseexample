@@ -43,14 +43,14 @@ class Activation extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/auth/'.$this->user->confirmation_code.'/activate');
+        $url = url('/auth/' . $this->user->confirmation_code . '/activate');
 
         return (new MailMessage())
-                    ->greeting('Hello!')
-                    ->line('Thank you for registering an account with us.')
-                    ->line('Click on the below link to verify your email!')
-                    ->action('Verify now!', $url)
-                    ->line('Thank you for using our application!');
+            ->greeting('Hello!')
+            ->line('Thank you for registering an account with us.')
+            ->line('Click on the below link to verify your email!')
+            ->action('Verify now!', $url)
+            ->line('Thank you for using our application!');
     }
 
     /**

@@ -48,8 +48,8 @@ class ForgotPasswordController extends APIController
         $user->notify(new UserNeedsPasswordReset($token));
 
         return $this->respond([
-            'status'    => 'ok',
-            'message'   => trans('api.messages.forgot_password.success'),
+            'status' => 'ok',
+            'message' => trans('api.messages.forgot_password.success'),
         ]);
     }
 }

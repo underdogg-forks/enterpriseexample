@@ -13,9 +13,9 @@ class BlogTag extends BaseModel
     use ModelTrait,
         SoftDeletes,
         BlogTagAttribute,
-        BlogTagRelationship{
-            // BlogTagAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+        BlogTagRelationship {
+        // BlogTagAttribute::getEditButtonAttribute insteadof ModelTrait;
+    }
 
     /**
      * The database table used by the model.

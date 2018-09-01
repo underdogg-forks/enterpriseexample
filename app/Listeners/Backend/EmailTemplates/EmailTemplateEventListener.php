@@ -19,7 +19,7 @@ class EmailTemplateEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->emailtemplates->id)
-            ->withText('trans("history.backend.emailtemplates.updated") <strong>'.$event->emailtemplates->title.'</strong>')
+            ->withText('trans("history.backend.emailtemplates.updated") <strong>' . $event->emailtemplates->title . '</strong>')
             ->withIcon('save')
             ->withClass('bg-aqua')
             ->log();
@@ -32,7 +32,7 @@ class EmailTemplateEventListener
     {
         history()->withType($this->history_slug)
             ->withEntity($event->emailtemplates->id)
-            ->withText('trans("history.backend.emailtemplates.deleted") <strong>'.$event->emailtemplates->title.'</strong>')
+            ->withText('trans("history.backend.emailtemplates.deleted") <strong>' . $event->emailtemplates->title . '</strong>')
             ->withIcon('trash')
             ->withClass('bg-maroon')
             ->log();

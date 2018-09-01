@@ -43,14 +43,15 @@ class EmailTemplatesController extends Controller
     }
 
     /**
-     * @param \App\Models\EmailTemplates\EmailTemplate                            $emailtemplate
+     * @param \App\Models\EmailTemplates\EmailTemplate $emailtemplate
      * @param \App\Http\Requests\Backend\EmailTemplates\EditEmailTemplatesRequest $request
      *
      * @return mixed
      */
-    public function edit(EmailTemplate $emailtemplate, EditEmailTemplatesRequest
-        $request)
-    {
+    public function edit(
+        EmailTemplate $emailtemplate,
+        EditEmailTemplatesRequest $request
+    ) {
         $emailtemplateTypes = EmailTemplateType::getSelectData();
         $emailtemplatePlaceholders = EmailTemplatePlaceholder::getSelectData();
 
@@ -61,14 +62,15 @@ class EmailTemplatesController extends Controller
     }
 
     /**
-     * @param \App\Models\EmailTemplates\EmailTemplate                              $emailtemplate
+     * @param \App\Models\EmailTemplates\EmailTemplate $emailtemplate
      * @param \App\Http\Requests\Backend\EmailTemplates\UpdateEmailTemplatesRequest $request
      *
      * @return mixed
      */
-    public function update(EmailTemplate $emailtemplate, UpdateEmailTemplatesRequest
-        $request)
-    {
+    public function update(
+        EmailTemplate $emailtemplate,
+        UpdateEmailTemplatesRequest $request
+    ) {
         $this->emailtemplates->update($emailtemplate, $request->except(['_method', '_token', 'placeholder']));
 
         return redirect()->route('admin.emailtemplates.index')
@@ -76,14 +78,15 @@ class EmailTemplatesController extends Controller
     }
 
     /**
-     * @param \App\Models\EmailTemplates\EmailTemplate                              $emailtemplate
+     * @param \App\Models\EmailTemplates\EmailTemplate $emailtemplate
      * @param \App\Http\Requests\Backend\EmailTemplates\DeleteEmailTemplatesRequest $request
      *
      * @return mixed
      */
-    public function destroy(EmailTemplate $emailtemplate, DeleteEmailTemplatesRequest
-        $request)
-    {
+    public function destroy(
+        EmailTemplate $emailtemplate,
+        DeleteEmailTemplatesRequest $request
+    ) {
         $this->emailtemplates->delete($emailtemplate);
 
         return redirect()->route('admin.emailtemplates.index')

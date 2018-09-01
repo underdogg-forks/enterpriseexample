@@ -45,17 +45,18 @@ class RoleRepository extends BaseRepository
             ->leftJoin('permission_role', 'permission_role.role_id', '=', 'roles.id')
             ->leftJoin('permissions', 'permission_role.permission_id', '=', 'permissions.id')
             ->select([
-                config('access.roles_table').'.id',
-                config('access.roles_table').'.name',
-                config('access.roles_table').'.all',
-                config('access.roles_table').'.sort',
-                config('access.roles_table').'.status',
-                config('access.roles_table').'.created_at',
-                config('access.roles_table').'.updated_at',
+                config('access.roles_table') . '.id',
+                config('access.roles_table') . '.name',
+                config('access.roles_table') . '.all',
+                config('access.roles_table') . '.sort',
+                config('access.roles_table') . '.status',
+                config('access.roles_table') . '.created_at',
+                config('access.roles_table') . '.updated_at',
                 DB::raw("GROUP_CONCAT( DISTINCT permissions.display_name SEPARATOR '<br/>') as permission_name"),
                 DB::raw('(SELECT COUNT(role_user.id) FROM role_user LEFT JOIN users ON role_user.user_id = users.id WHERE role_user.role_id = roles.id AND users.deleted_at IS NULL) AS userCount'),
             ])
-            ->groupBy(config('access.roles_table').'.id', config('access.roles_table').'.name', config('access.roles_table').'.all', config('access.roles_table').'.sort');
+            ->groupBy(config('access.roles_table') . '.id', config('access.roles_table') . '.name',
+                config('access.roles_table') . '.all', config('access.roles_table') . '.sort');
     }
 
     /**
@@ -90,7 +91,7 @@ class RoleRepository extends BaseRepository
             $role = self::MODEL;
             $role = new $role();
             $role->name = $input['name'];
-            $role->sort = isset($input['sort']) && strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
+            $role->sort = isset($input['sort']) && strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int)$input['sort'] : 0;
 
             //See if this role has all permissions and set the flag on the role
             $role->all = $all;
@@ -152,7 +153,7 @@ class RoleRepository extends BaseRepository
         }
 
         $role->name = $input['name'];
-        $role->sort = isset($input['sort']) && strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
+        $role->sort = isset($input['sort']) && strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int)$input['sort'] : 0;
 
         //See if this role has all permissions and set the flag on the role
         $role->all = $all;
@@ -231,7 +232,7 @@ class RoleRepository extends BaseRepository
     public function getDefaultUserRole()
     {
         if (is_numeric(config('access.users.default_role'))) {
-            return $this->query()->where('id', (int) config('access.users.default_role'))->first();
+            return $this->query()->where('id', (int)config('access.users.default_role'))->first();
         }
 
         return $this->query()->where('name', config('access.users.default_role'))->first();

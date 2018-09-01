@@ -70,9 +70,26 @@ class FaqsController extends APIController
     }
 
     /**
+     * validate Faq.
+     *
+     * @param $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function validateFaq(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'question' => 'required|max:191',
+            'answer' => 'required',
+        ]);
+
+        return $validation;
+    }
+
+    /**
      * Update Faq.
      *
-     * @param Faq     $faq
+     * @param Faq $faq
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
@@ -95,7 +112,7 @@ class FaqsController extends APIController
     /**
      * Delete Faq.
      *
-     * @param Faq     $faq
+     * @param Faq $faq
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
@@ -107,22 +124,5 @@ class FaqsController extends APIController
         return $this->respond([
             'message' => trans('alerts.backend.faqs.deleted'),
         ]);
-    }
-
-    /**
-     * validate Faq.
-     *
-     * @param $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function validateFaq(Request $request)
-    {
-        $validation = Validator::make($request->all(), [
-            'question' => 'required|max:191',
-            'answer'   => 'required',
-        ]);
-
-        return $validation;
     }
 }

@@ -32,5 +32,6 @@ Breadcrumbs::register('admin.access.user.edit', function ($breadcrumbs, $id) {
 
 Breadcrumbs::register('admin.access.user.change-password', function ($breadcrumbs, $id) {
     $breadcrumbs->parent('admin.access.user.index');
-    $breadcrumbs->push(trans('menus.backend.access.users.change-password'), route('admin.access.user.change-password', $id));
+    $breadcrumbs->push(trans('menus.backend.access.users.change-password'),
+        route('admin.access.user.change-password', $id));
 });

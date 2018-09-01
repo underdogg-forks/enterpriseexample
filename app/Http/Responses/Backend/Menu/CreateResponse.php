@@ -17,7 +17,7 @@ class CreateResponse implements Responsable
     protected $modules;
 
     /**
-     * @param array                    $types
+     * @param array $types
      * @param \Bvipul\Generator\Module $modules
      */
     public function __construct($types, $modules)

@@ -46,12 +46,12 @@ class PasswordResetted extends Notification
         $url = url('/');
 
         return (new MailMessage())
-                    ->greeting('Hello!')
-                    ->line('Your password has been reset successfully!')
-                    ->line('Click on the below link to continue login.')
-                    ->action('Login', $url)
-                    ->line('If you haven\'t changed your password, please contact administrator.')
-                    ->line('Thank you!');
+            ->greeting('Hello!')
+            ->line('Your password has been reset successfully!')
+            ->line('Click on the below link to continue login.')
+            ->action('Login', $url)
+            ->line('If you haven\'t changed your password, please contact administrator.')
+            ->line('Thank you!');
     }
 
     /**

@@ -70,9 +70,27 @@ class PagesController extends APIController
     }
 
     /**
+     * validateUser Pages Requests.
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function validatePages(Request $request, $id = 0)
+    {
+        $validation = Validator::make($request->all(), [
+            'title' => 'required|max:191|unique:pages,title,' . $id,
+            'description' => 'required',
+        ]);
+
+        return $validation;
+    }
+
+    /**
      *  Update Page.
      *
-     * @param Page    $page
+     * @param Page $page
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
@@ -95,7 +113,7 @@ class PagesController extends APIController
     /**
      *  Delete Page.
      *
-     * @param Page              $page
+     * @param Page $page
      * @param DeletePageRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
@@ -107,23 +125,5 @@ class PagesController extends APIController
         return $this->respond([
             'message' => trans('alerts.backend.pages.deleted'),
         ]);
-    }
-
-    /**
-     * validateUser Pages Requests.
-     *
-     * @param Request $request
-     * @param int     $id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function validatePages(Request $request, $id = 0)
-    {
-        $validation = Validator::make($request->all(), [
-            'title'       => 'required|max:191|unique:pages,title,'.$id,
-            'description' => 'required',
-        ]);
-
-        return $validation;
     }
 }

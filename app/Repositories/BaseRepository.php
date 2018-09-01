@@ -16,6 +16,14 @@ class BaseRepository
     }
 
     /**
+     * @return mixed
+     */
+    public function query()
+    {
+        return call_user_func(static::MODEL . '::query');
+    }
+
+    /**
      * Get Paginated.
      *
      * @param $per_page
@@ -53,13 +61,5 @@ class BaseRepository
     public function find($id)
     {
         return $this->query()->find($id);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function query()
-    {
-        return call_user_func(static::MODEL.'::query');
     }
 }

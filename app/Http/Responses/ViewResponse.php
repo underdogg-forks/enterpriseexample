@@ -18,7 +18,7 @@ class ViewResponse implements Responsable
 
     /**
      * @param string $view
-     * @param array  $with
+     * @param array $with
      */
     public function __construct($view, $with = [])
     {

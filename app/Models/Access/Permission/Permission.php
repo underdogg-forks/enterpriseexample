@@ -17,8 +17,8 @@ class Permission extends BaseModel
         SoftDeletes,
         PermissionAttribute,
         PermissionRelationship {
-            // PermissionAttribute::getEditButtonAttribute insteadof ModelTrait;
-        }
+        // PermissionAttribute::getEditButtonAttribute insteadof ModelTrait;
+    }
 
     /**
      * The database table used by the model.
