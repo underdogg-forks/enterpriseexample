@@ -63,7 +63,7 @@ class UserStatusController extends Controller
     }
 
     /**
-     * @param User              $deletedUser
+     * @param User $deletedUser
      * @param DeleteUserRequest $request
      *
      * @return mixed
@@ -76,7 +76,7 @@ class UserStatusController extends Controller
     }
 
     /**
-     * @param User              $deletedUser
+     * @param User $deletedUser
      * @param DeleteUserRequest $request
      *
      * @return mixed

@@ -33,7 +33,7 @@ class RoleController extends Controller
     protected $permissions;
 
     /**
-     * @param \App\Repositories\Backend\Access\Role\RoleRepository             $roles
+     * @param \App\Repositories\Backend\Access\Role\RoleRepository $roles
      * @param \App\Repositories\Backend\Access\Permission\PermissionRepository $permissions
      */
     public function __construct(RoleRepository $roles, PermissionRepository $permissions)
@@ -71,11 +71,12 @@ class RoleController extends Controller
     {
         $this->roles->create($request->all());
 
-        return new RedirectResponse(route('admin.access.role.index'), ['flash_success' => trans('alerts.backend.roles.created')]);
+        return new RedirectResponse(route('admin.access.role.index'),
+            ['flash_success' => trans('alerts.backend.roles.created')]);
     }
 
     /**
-     * @param \App\Models\Access\Role\Role                           $role
+     * @param \App\Models\Access\Role\Role $role
      * @param \App\Http\Requests\Backend\Access\Role\EditRoleRequest $request
      *
      * @return \App\Http\Responses\Backend\Access\Role\EditResponse
@@ -86,7 +87,7 @@ class RoleController extends Controller
     }
 
     /**
-     * @param \App\Models\Access\Role\Role                             $role
+     * @param \App\Models\Access\Role\Role $role
      * @param \App\Http\Requests\Backend\Access\Role\UpdateRoleRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -95,11 +96,12 @@ class RoleController extends Controller
     {
         $this->roles->update($role, $request->all());
 
-        return new RedirectResponse(route('admin.access.role.index'), ['flash_success' => trans('alerts.backend.roles.updated')]);
+        return new RedirectResponse(route('admin.access.role.index'),
+            ['flash_success' => trans('alerts.backend.roles.updated')]);
     }
 
     /**
-     * @param \App\Models\Access\Role\Role                             $role
+     * @param \App\Models\Access\Role\Role $role
      * @param \App\Http\Requests\Backend\Access\Role\DeleteRoleRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -108,6 +110,7 @@ class RoleController extends Controller
     {
         $this->roles->delete($role);
 
-        return new RedirectResponse(route('admin.access.role.index'), ['flash_success' => trans('alerts.backend.roles.deleted')]);
+        return new RedirectResponse(route('admin.access.role.index'),
+            ['flash_success' => trans('alerts.backend.roles.deleted')]);
     }
 }

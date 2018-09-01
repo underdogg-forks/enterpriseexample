@@ -27,7 +27,7 @@ class UserPasswordController extends Controller
     }
 
     /**
-     * @param User              $user
+     * @param User $user
      * @param ManageUserRequest $request
      *
      * @return mixed
@@ -39,7 +39,7 @@ class UserPasswordController extends Controller
     }
 
     /**
-     * @param User                      $user
+     * @param User $user
      * @param UpdateUserPasswordRequest $request
      *
      * @return mixed
@@ -48,6 +48,7 @@ class UserPasswordController extends Controller
     {
         $this->users->updatePassword($user, $request->all());
 
-        return redirect()->route('admin.access.user.change-password', access()->user()->id)->withFlashSuccess(trans('alerts.backend.users.updated_password'));
+        return redirect()->route('admin.access.user.change-password',
+            access()->user()->id)->withFlashSuccess(trans('alerts.backend.users.updated_password'));
     }
 }

@@ -28,7 +28,8 @@ trait UserRelationship
      */
     public function permissions()
     {
-        return $this->belongsToMany(config('access.permission'), config('access.permission_user_table'), 'user_id', 'permission_id');
+        return $this->belongsToMany(config('access.permission'), config('access.permission_user_table'), 'user_id',
+            'permission_id');
     }
 
     /**

@@ -23,6 +23,16 @@ mix.sass('resources/assets/sass/frontend/app.scss', 'public/css/frontend.css')
         'public/css/custom-style.css',
         'public/css/loader.css',
         'public/css/bootstrap-datetimepicker.min.css'
+    ], 'public/css/frontend-custom.css')
+    .styles([
+        'public/css/plugin/datatables/jquery.dataTables.min.css',
+        'public/css/backend/plugin/datatables/dataTables.bootstrap.min.css',
+        'public/css/plugin/datatables/buttons.dataTables.min.css',
+        'public/js/select2/select2.css',
+        'public/css/bootstrap.min.css',
+        'public/css/custom-style.css',
+        'public/css/loader.css',
+        'public/css/bootstrap-datetimepicker.min.css'
     ], 'public/css/backend-custom.css')
     .js([
         'resources/assets/js/frontend/app.js',
@@ -38,6 +48,14 @@ mix.sass('resources/assets/sass/frontend/app.scss', 'public/css/frontend.css')
     .copyDirectory('node_modules/tinymce/plugins', 'public/js/plugins')
     .copyDirectory('node_modules/tinymce/skins', 'public/js/skins')
     .copyDirectory('node_modules/tinymce/themes', 'public/js/themes')
+    .scripts([
+        "node_modules/moment/moment.js",
+        "node_modules/select2/dist/js/select2.full.js",
+        "public/js/bootstrap-datetimepicker.min.js",
+        "public/js/backend/custom-file-input.js",
+        "public/js/backend/notification.js",
+        "public/js/backend/admin.js"
+    ], 'public/js/frontend-custom.js')
     .scripts([
         "node_modules/moment/moment.js",
         "node_modules/select2/dist/js/select2.full.js",

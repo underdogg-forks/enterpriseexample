@@ -33,8 +33,8 @@ class StoreRoleRequest extends Request
         }
 
         return [
-            'name'          => 'required|max:191',
-            'permissions'   => $permissions,
+            'name' => 'required|max:191',
+            'permissions' => $permissions,
         ];
     }
 

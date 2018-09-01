@@ -13,8 +13,8 @@ use App\Repositories\Backend\Access\User\UserSessionRepository;
 class UserSessionController extends Controller
 {
     /**
-     * @param User                  $user
-     * @param ManageUserRequest     $request
+     * @param User $user
+     * @param ManageUserRequest $request
      * @param UserSessionRepository $userSessionRepository
      *
      * @return mixed

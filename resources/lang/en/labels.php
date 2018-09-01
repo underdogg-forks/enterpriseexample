@@ -257,7 +257,10 @@ return [
             "title" => "Relations",
             "table" => [
                 "id" => "Id",
+                "name" => "Name",
                 "createdat" => "Created At",
+                "createdby" => "Created By",
+                "all" => "All",
             ],
         ],
     ],
@@ -296,6 +299,19 @@ return [
                 "canada" => "Canada Province & Territories List",
             ],
             "timezone" => "Timezone",
+        ],
+        "relations" => [
+            "create" => "Create Relation",
+            "edit" => "Edit Relation",
+            "management" => "Relation Management",
+            "title" => "Relations",
+            "table" => [
+                "id" => "Id",
+                "name" => "Name",
+                "createdat" => "Created At",
+                "updatedat" => "Updated At",
+                "all" => "All",
+            ],
         ],
         "user" => [
             "passwords" => [

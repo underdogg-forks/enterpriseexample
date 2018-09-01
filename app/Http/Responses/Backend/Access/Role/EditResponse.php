@@ -17,7 +17,7 @@ class EditResponse implements Responsable
     protected $permissions;
 
     /**
-     * @param \App\Models\Access\Role\Role                                     $role
+     * @param \App\Models\Access\Role\Role $role
      * @param \App\Repositories\Backend\Access\Permission\PermissionRepository $permissions
      */
     public function __construct($role, $permissions)

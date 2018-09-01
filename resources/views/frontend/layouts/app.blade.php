@@ -1,18 +1,17 @@
-@php
-    use Illuminate\Support\Facades\Route;
-@endphp
-        <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
+<!doctype html>
+<html class="no-js" lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- <link rel="icon" sizes="16x16" type="image/png" href="{{route('frontend.index')}}/img/favicon_icon/{{settings()->favicon}}"> --}}
     <title>@yield('title', app_name())</title>
 
     <!-- Meta -->
-    <meta name="description" content="@yield('meta_description', 'Laravel AdminPanel')">
+    <meta name="description" content="@yield('meta_description', 'Default Description')">
     <meta name="author" content="@yield('meta_author', 'Viral Solani')">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
 @yield('meta')
 
 <!-- Styles -->
@@ -25,45 +24,54 @@
 @else
     {{ Html::style(mix('css/frontend.css')) }}
 @endif
-{!! Html::style('js/select2/select2.css') !!}
+{{ Html::style(mix('css/frontend-custom.css')) }}
 @yield('after-styles')
 
-<!-- Scripts -->
+<!-- Html5 Shim and Respond.js IE8 support of Html5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    {{ Html::script('https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js') }}
+    {{ Html::script('https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js') }}
+    <![endif]-->
+
+    <!-- Scripts -->
     <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
+        window.Laravel = {!! json_encode([ 'csrfToken' => csrf_token() ]) !!};
     </script>
-    <?php
-    if (!empty($google_analytics)) {
-        echo $google_analytics;
-    }
-    ?>
 </head>
-<body id="app-layout">
-<div id="app">
-    @include('includes.partials.logged-in-as')
-    @include('frontend.includes.nav')
+<body class="skin-{{ config('frontend.theme') }} {{ config('frontend.layout') }}">
+<div class="loading" style="display:none"></div>
+@include('includes.partials.logged-in-as')
 
-    <div class="container">
-        @include('includes.partials.messages')
-        @yield('content')
-    </div><!-- container -->
-</div><!--#app-->
+<div class="wrapper" id="app">
+@include('frontend.includes.header')
+@include('frontend.includes.sidebar-dynamic')
 
-<!-- Scripts -->
+<!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        @yield('page-header')
+        <!-- Breadcrumbs would render from routes/breadcrumb.php -->
+            @if(Breadcrumbs::exists())
+                {!! Breadcrumbs::render() !!}
+            @endif
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            @include('includes.partials.messages')
+            @yield('content')
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+
+    @include('frontend.includes.footer')
+</div><!-- ./wrapper -->
+
+<!-- JavaScripts -->
 @yield('before-scripts')
-{!! Html::script(mix('js/frontend.js')) !!}
+{{ Html::script(mix('js/frontend.js')) }}
+{{ Html::script(mix('js/frontend-custom.js')) }}
 @yield('after-scripts')
-{{ Html::script('js/jquerysession.js') }}
-{{ Html::script('js/frontend/frontend.js') }}
-{!! Html::script('js/select2/select2.js') !!}
-
-<script type="text/javascript">
-    if ("{{Route::currentRouteName()}}" !== "frontend.user.account") {
-        $.session.clear();
-    }
-</script>
-@include('includes.partials.ga')
 </body>
 </html>

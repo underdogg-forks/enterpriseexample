@@ -76,11 +76,12 @@ class UserController extends Controller
     {
         $this->users->create($request);
 
-        return new RedirectResponse(route('admin.access.user.index'), ['flash_success' => trans('alerts.backend.users.created')]);
+        return new RedirectResponse(route('admin.access.user.index'),
+            ['flash_success' => trans('alerts.backend.users.created')]);
     }
 
     /**
-     * @param \App\Models\Access\User\User                           $user
+     * @param \App\Models\Access\User\User $user
      * @param \App\Http\Requests\Backend\Access\User\ShowUserRequest $request
      *
      * @return \App\Http\Responses\Backend\Access\User\ShowResponse
@@ -91,7 +92,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param \App\Models\Access\User\User                           $user
+     * @param \App\Models\Access\User\User $user
      * @param \App\Http\Requests\Backend\Access\User\EditUserRequest $request
      *
      * @return \App\Http\Responses\Backend\Access\User\EditResponse
@@ -105,7 +106,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param \App\Models\Access\User\User                             $user
+     * @param \App\Models\Access\User\User $user
      * @param \App\Http\Requests\Backend\Access\User\UpdateUserRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -114,11 +115,12 @@ class UserController extends Controller
     {
         $this->users->update($user, $request);
 
-        return new RedirectResponse(route('admin.access.user.index'), ['flash_success' => trans('alerts.backend.users.updated')]);
+        return new RedirectResponse(route('admin.access.user.index'),
+            ['flash_success' => trans('alerts.backend.users.updated')]);
     }
 
     /**
-     * @param \App\Models\Access\User\User                             $user
+     * @param \App\Models\Access\User\User $user
      * @param \App\Http\Requests\Backend\Access\User\DeleteUserRequest $request
      *
      * @return \App\Http\Responses\RedirectResponse
@@ -127,6 +129,7 @@ class UserController extends Controller
     {
         $this->users->delete($user);
 
-        return new RedirectResponse(route('admin.access.user.index'), ['flash_success' => trans('alerts.backend.users.deleted')]);
+        return new RedirectResponse(route('admin.access.user.index'),
+            ['flash_success' => trans('alerts.backend.users.deleted')]);
     }
 }
