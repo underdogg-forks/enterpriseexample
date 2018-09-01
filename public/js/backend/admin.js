@@ -1,4 +1,4 @@
-//common functionalities for all the javascript featueres
+//common functionalities for all the javascript features
 var Backend = {}; // common variable used in all the files of the backend
 
 (function () {
@@ -229,7 +229,7 @@ var Backend = {}; // common variable used in all the files of the backend
             },
             windowloadhandler: function () {
 
-                // scripts to be handeled on user create and edit when window is laoaded
+                // scripts to be handled on user create and edit when window is loaded
                 Backend.Users.selectors.showPermission.forEach(function (element) {
                     element.onclick = function (event) {
                         event.preventDefault();
@@ -775,7 +775,7 @@ var Backend = {}; // common variable used in all the files of the backend
                             dataTable.fnFilter(this.value);
                         }
                     };
-                }); // to remove all the listinerers
+                }); // to remove all the listeners
 
                 // for text boxes
                 //column input search if search box on the column of the datatable given with enter then search with datatable

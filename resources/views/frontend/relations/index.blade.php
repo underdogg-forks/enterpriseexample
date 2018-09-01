@@ -16,6 +16,13 @@
             </div>
         </div><!--box-header with-border-->
 
+        <div class="box-header with-border">
+            {{--<button type="button" class="btn btn-info show-modal" data-form="_add_custom_url_form"
+                    data-header="Add Custom URL"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Custom URL
+            </button>--}}
+        </div><!--box-header with-border-->
+
+
         <div class="box-body">
             <div class="table-responsive data-table-wrapper">
                 <table id="relations-table" class="table table-condensed table-hover table-bordered">
@@ -85,7 +92,7 @@
                 }
             });
 
-            frontend.DataTableSearch.init(dataTable);
+            backend.DataTableSearch.init(dataTable);
         });
     </script>
 @endsection

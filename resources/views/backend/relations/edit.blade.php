@@ -10,14 +10,14 @@
 @endsection
 
 @section('content')
-    {{ Form::model($relation, ['route' => ['admin.relations.update', $relation], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH', 'id' => 'edit-relation']) }}
+    {{ Form::model($relation, ['route' => ['frontend.relations.relations.update', $relation], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH', 'id' => 'edit-relation']) }}
 
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">{{ trans('labels.backend.relations.edit') }}</h3>
 
             <div class="box-tools pull-right">
-                @include('backend.relations.partials.relations-header-buttons')
+                @include('backend.relations.partials.relationz-header-buttons')
             </div><!--box-tools pull-right-->
         </div><!--box-header with-border-->
 

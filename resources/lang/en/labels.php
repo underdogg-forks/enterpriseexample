@@ -258,8 +258,9 @@ return [
             "table" => [
                 "id" => "Id",
                 "name" => "Name",
+                "slug" => "Slug",
                 "createdat" => "Created At",
-                "createdby" => "Created By",
+                "updatedat" => "Updated At",
                 "all" => "All",
             ],
         ],
@@ -308,6 +309,7 @@ return [
             "table" => [
                 "id" => "Id",
                 "name" => "Name",
+                "slug" => "Slug",
                 "createdat" => "Created At",
                 "updatedat" => "Updated At",
                 "all" => "All",

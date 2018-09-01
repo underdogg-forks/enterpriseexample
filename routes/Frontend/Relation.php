@@ -28,3 +28,8 @@ Route::group(['namespace' => '', 'prefix' => '', 'as' => 'relations.', 'middlewa
     });
 
 });
+
+
+Route::group(['namespace' => 'Relations'], function () {
+    Route::get('relations/get-form/{name?}', 'RelationsFormController@create')->name('relations.getform');
+});

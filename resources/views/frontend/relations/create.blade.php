@@ -17,7 +17,7 @@
             <h3 class="box-title">{{ trans('labels.backend.relations.create') }}</h3>
 
             <div class="box-tools pull-right">
-                @include('backend.relations.partials.relations-header-buttons')
+                @include('backend.relations.partials.relationz-header-buttons')
             </div><!--box-tools pull-right-->
         </div><!--box-header with-border-->
 

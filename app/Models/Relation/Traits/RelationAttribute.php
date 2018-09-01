@@ -18,8 +18,8 @@ trait RelationAttribute
     public function getActionButtonsAttribute()
     {
         return '<div class="btn-group action-btn">
-                ' . $this->getEditButtonAttribute("edit-relation", "admin.relations.edit") . '
-                ' . $this->getDeleteButtonAttribute("delete-relation", "admin.relations.destroy") . '
+                ' . $this->getEditButtonAttribute("edit-relation", "frontend.relations.relations.edit") . '
+                ' . $this->getDeleteButtonAttribute("delete-relation", "frontend.relations.relations.destroy") . '
                 </div>';
     }
 }

@@ -45,7 +45,7 @@ class RelationsTableController extends Controller
                 return Carbon::parse($relation->created_at)->toDateString();
             })
             ->addColumn('updated_at', function ($relation) {
-                return Carbon::parse($menus->updated_at)->toDateString();
+                return Carbon::parse($relation->updated_at)->toDateString();
             })
             ->addColumn('actions', function ($relation) {
                 return $relation->action_buttons;

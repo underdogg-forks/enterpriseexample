@@ -28,6 +28,8 @@ class RelationRepository extends BaseRepository
         return $this->query()
             ->select([
                 config('module.relations.table') . '.id',
+                config('module.relations.table') . '.name',
+                config('module.relations.table') . '.slug',
                 config('module.relations.table') . '.created_at',
                 config('module.relations.table') . '.updated_at',
             ]);
@@ -42,7 +44,7 @@ class RelationRepository extends BaseRepository
      */
     public function create(array $input)
     {
-        if ($Relation::create($input)) {
+        if (Relation::create($input)) {
             return true;
         }
         throw new GeneralException(trans('exceptions.backend.relations.create_error'));

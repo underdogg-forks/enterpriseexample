@@ -35,7 +35,7 @@ class RelationsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  App\Http\Requests\Backend\Relation\ManageRelationRequest $request
+     * @param  App\Http\Requests\Frontend\Relation\ManageRelationRequest $request
      * @return \Illuminate\Http\Response
      */
     public function index(ManageRelationRequest $request)
@@ -51,7 +51,7 @@ class RelationsController extends Controller
      */
     public function create(CreateRelationRequest $request)
     {
-        return view('backend.relations.create');
+        return view('frontend.relations.create');
     }
 
     /**
@@ -67,7 +67,7 @@ class RelationsController extends Controller
         //Create the model using repository create method
         $this->repository->create($input);
         //return with successfull message
-        return redirect()->route('frontend.relations.relations.index')->withFlashSuccess(trans('alerts.backend.relations.created'));
+        return redirect()->route('frontend.relations.relations.index')->withFlashSuccess(trans('alerts.frontend.relations.created'));
     }
 
     /**
@@ -79,7 +79,7 @@ class RelationsController extends Controller
      */
     public function edit(Relation $relation, EditRelationRequest $request)
     {
-        return view('backend.relations.edit', compact('relation'));
+        return view('frontend.relations.edit', compact('relation'));
     }
 
     /**
@@ -96,7 +96,7 @@ class RelationsController extends Controller
         //Update the model using repository update method
         $this->repository->update($relation, $input);
         //return with successfull message
-        return redirect()->route('frontend.relations.relations.index')->withFlashSuccess(trans('alerts.backend.relations.updated'));
+        return redirect()->route('frontend.relations.relations.index')->withFlashSuccess(trans('alerts.frontend.relations.updated'));
     }
 
     /**
@@ -111,7 +111,7 @@ class RelationsController extends Controller
         //Calling the delete method on repository
         $this->repository->delete($relation);
         //returning with successfull message
-        return redirect()->route('frontend.relations.relations.index')->withFlashSuccess(trans('alerts.backend.relations.deleted'));
+        return redirect()->route('frontend.relations.relations.index')->withFlashSuccess(trans('alerts.frontend.relations.deleted'));
     }
 
 }
